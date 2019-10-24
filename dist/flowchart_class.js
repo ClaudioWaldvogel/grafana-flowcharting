@@ -127,7 +127,7 @@ var Flowchart = function () {
     key: "applyStates",
     value: function applyStates() {
       u.log(1, "flowchart[".concat(this.data.name, "].applyStates()"));
-      this.stateHandler.applyStates();
+      this.stateHandler.async_applyStates();
     }
   }, {
     key: "applyOptions",

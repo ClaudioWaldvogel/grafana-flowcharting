@@ -12,7 +12,7 @@ export default class TooltipHandler {
     this.timeFormat = 'YYYY-MM-DD HH:mm:ss';
     this.mxcell = mxcell;
     this.checked = false;
-    this.metrics = [];
+    this.metrics = new Map();
     this.lineOptions = {
       showPoint: false,
       showLine: true,
@@ -233,4 +233,132 @@ export default class TooltipHandler {
     }
     return result;
   }
+}
+
+/**
+ *Create a metric for tooltip
+ *
+ * @class MetricTooltip
+ */
+class MetricTooltip {
+  constructor(name) {
+    this.name = name;
+  }
+  //name, label, value, color, direction
+  setName(name) {
+    this.name = name;
+    return this
+  }
+
+  setLabel(label) {
+    this.label = label;
+    return this
+  }
+
+  setValue(value) {
+    this.value = value;
+    return this;
+  }
+
+  setColor(color) {
+    this.color = color;
+    return this;
+  }
+
+  setDirection(directtion) {
+    this.directtion = directtion;
+    return this;
+  }
+
+  set(key,value) {
+    this[key] = value;
+    return this;
+  }
+
+  getMetricDiv(metric, parentDiv) {
+    u.log(1,`TooltipHandler[${this.mxcell.mxObjectId}].getMetricDiv()`);
+    u.log(0,`TooltipHandler[${this.mxcell.mxObjectId}].getMetricDiv() metric`, metric);
+    let div = document.createElement('div');
+    let string = '';
+    if (parentDiv != undefined) parentDiv.appendChild(div);
+    if (this.label !== undefined) {
+      string += `${this.label} : `;
+      string += `<span style="color:${metric.color}"><b>${this.value}</b></span>`;
+    }
+    div.innerHTML = string;
+    return div;
+  }
+
+  addGraph(type) {
+    this.graphType = type; 
+    if(type === "line") this.graph = new GraphTooltip();
+    return this.graph;
+  }
+
+}
+
+/**
+ *Create a graph for tooltip
+ *
+ * @class GraphTooltip
+ */
+class GraphTooltip {
+  constructor() {
+  }
+  setName(name) {
+    this.name = name;
+    return this;
+  }
+
+  setType(type) {
+    this.type= type;
+    return this;
+  }
+
+  setSize(type) {
+    this.type= type;
+    return this;
+  }
+
+  setSerie(serie) {
+    this.serie= serie;
+    return this;
+  }
+
+  setScaling(low,high) {
+    this.low = low;
+    this.high = high;
+    return this;
+  }
+
+  set(key,value) {
+    this[key] = value;
+    return this;
+  }
+
+  getChartDiv(metric, parentDiv) {
+    this.div = document.createElement('div');
+    div.className = 'tooltip-graph';
+    if (parentDiv != undefined) parentDiv.appendChild(div);
+    if (metric.graph) {
+      if (metric.graphOptions.type === 'line') this.getLineChartDiv(this.div);
+    }
+    return this.div;
+  }
+
+  static array2Coor(arr) {
+    let result = [];
+    for (let index = 0; index < arr.length; index++) {
+      result.push({
+        x: arr[index][0],
+        y: arr[index][1]
+      });
+    }
+    return result;
+  }
+
+}
+
+class LineGraphTooltip extends GraphTooltip {
+
 }

@@ -9,6 +9,10 @@ var _state_class = _interopRequireDefault(require("./state_class"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -20,7 +24,7 @@ var StateHandler = function () {
     _classCallCheck(this, StateHandler);
 
     u.log(1, 'StateHandler.constructor()');
-    this.states = [];
+    this.states = new Map();
     this.ctrl = ctrl;
     this.templateSrv = this.ctrl.templateSrv;
     this.xgraph = xgraph;
@@ -34,7 +38,7 @@ var StateHandler = function () {
 
       u.log(1, 'StateHandler.initStates()');
       this.xgraph = xgraph;
-      this.states = [];
+      this.states.clear();
       var mxcells = xgraph.getMxCells();
 
       _.each(mxcells, function (mxcell) {
@@ -45,16 +49,17 @@ var StateHandler = function () {
     key: "getStatesForRule",
     value: function getStatesForRule(rule) {
       u.log(1, 'StateHandler.getStatesForRule()');
-      var result = [];
+      var result = new Map();
       var name = null;
       var xgraph = this.xgraph;
       this.states.forEach(function (state) {
         var mxcell = state.mxcell;
+        var id = mxcell.id;
         var found = false;
         name = xgraph.getValuePropOfMxCell(rule.data.shapeProp, mxcell);
 
         if (rule.matchShape(name)) {
-          result.push(state);
+          result.set(id, state);
           found = true;
         }
 
@@ -62,7 +67,7 @@ var StateHandler = function () {
           name = xgraph.getValuePropOfMxCell(rule.data.textProp, mxcell);
 
           if (rule.matchText(name)) {
-            result.push(state);
+            result.set(id, state);
             found = true;
           }
         }
@@ -71,7 +76,7 @@ var StateHandler = function () {
           name = xgraph.getValuePropOfMxCell(rule.data.linkProp, mxcell);
 
           if (rule.matchLink(name)) {
-            result.push(state);
+            result.set(id, state);
             found = true;
           }
         }
@@ -96,44 +101,19 @@ var StateHandler = function () {
   }, {
     key: "getState",
     value: function getState(cellId) {
-      var foundState = null;
-
-      for (var index = 0; index < this.states.length; index++) {
-        var state = this.states[index];
-
-        if (cellId == state.cellId) {
-          foundState = state;
-          break;
-        }
-      }
-
-      return foundState;
+      return this.states.get(cellId);
     }
   }, {
     key: "addState",
     value: function addState(mxcell) {
-      var state = this.getState(mxcell.id);
-
-      if (state === null) {
-        state = new _state_class["default"](mxcell, this.xgraph, this.ctrl);
-        this.states.push(state);
-      }
-
+      var state = new _state_class["default"](mxcell, this.xgraph, this.ctrl);
+      this.states.set(mxcell.id, state);
       return state;
     }
   }, {
     key: "countStates",
     value: function countStates() {
-      return this.states.length;
-    }
-  }, {
-    key: "countStatesWithLevel",
-    value: function countStatesWithLevel(level) {
-      var count = 0;
-      this.states.forEach(function (state) {
-        if (state.getLevel() === level) count += 1;
-      });
-      return count;
+      return this.states.size;
     }
   }, {
     key: "prepare",
@@ -171,9 +151,28 @@ var StateHandler = function () {
     }
   }, {
     key: "async_applyStates",
-    value: function async_applyStates() {
-      this.applyStates();
-    }
+    value: function () {
+      var _async_applyStates = _asyncToGenerator(regeneratorRuntime.mark(function _callee() {
+        return regeneratorRuntime.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                this.applyStates();
+
+              case 1:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function async_applyStates() {
+        return _async_applyStates.apply(this, arguments);
+      }
+
+      return async_applyStates;
+    }()
   }]);
 
   return StateHandler;

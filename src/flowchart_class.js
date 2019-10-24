@@ -112,14 +112,33 @@ export default class Flowchart {
     }
   }
 
+  /**
+   *Get states handler
+   *
+   * @returns
+   * @memberof Flowchart
+   */
   getStateHandler() {
     return this.stateHandler;
   }
 
+  /**
+   *Get XGraph
+   *
+   * @returns
+   * @memberof Flowchart
+   */
   getXGraph() {
     return this.xgraph;
   }
 
+  /**
+   *Init states with rules and series
+   *
+   * @param {*} rules
+   * @param {*} series
+   * @memberof Flowchart
+   */
   setStates(rules, series) {
     u.log(1, `flowchart[${this.data.name}].setStates()`);
     u.log(0, `flowchart[${this.data.name}].setStates() rules`, rules);
@@ -129,6 +148,11 @@ export default class Flowchart {
     this.stateHandler.setStates(rules, series);
   }
 
+  /**
+   *Init options of graph
+   *
+   * @memberof Flowchart
+   */
   setOptions() {
     this.setScale(this.data.scale);
     this.setCenter(this.data.center);
@@ -140,23 +164,44 @@ export default class Flowchart {
   }
 
 
-
+  /**
+   *Apply new states (colors,text ...)
+   *
+   * @memberof Flowchart
+   */
   applyStates() {
     u.log(1, `flowchart[${this.data.name}].applyStates()`);
-    this.stateHandler.applyStates();
+    // this.stateHandler.applyStates();
+    this.stateHandler.async_applyStates();
   }
 
+  /**
+   *Apply options
+   *
+   * @memberof Flowchart
+   */
   applyOptions() {
     u.log(1, `flowchart[${this.data.name}].refresh()`);
     u.log(0, `flowchart[${this.data.name}].refresh() data`, this.data);
     this.xgraph.applyGraph(this.width, this.height);
   }
 
+  /**
+   *Refresh graph
+   *
+   * @memberof Flowchart
+   */
   refresh()
   {
     this.xgraph.refresh();
   }
 
+  /**
+   *Reset and redraw graph when source changed
+   *
+   * @param {*} xmlGraph
+   * @memberof Flowchart
+   */
   redraw(xmlGraph) {
     u.log(1, `flowchart[${this.data.name}].redraw()`);
     if (xmlGraph !== undefined) {
@@ -169,6 +214,11 @@ export default class Flowchart {
     this.applyOptions();
   }
 
+  /**
+   *Reload source of graph
+   *
+   * @memberof Flowchart
+   */
   reload() {
     u.log(1, `flowchart[${this.data.name}].reload()`);
     if (this.xgraph !== undefined && this.xgraph !== null) {
@@ -268,6 +318,13 @@ export default class Flowchart {
     }
   }
 
+  /**
+   *Load source from url
+   *
+   * @param {*} url
+   * @returns
+   * @memberof Flowchart
+   */
   loadContent(url) {
     u.log(1, `flowchart[${this.data.name}].loadContent()`);
     var req = mxUtils.load(url);
