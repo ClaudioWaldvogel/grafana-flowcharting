@@ -122,7 +122,6 @@ var State = function () {
         var FormattedValue = rule.getFormattedValue(value);
         var level = rule.getThresholdLevel(value);
         var color = rule.getColorForLevel(level);
-        var tooltipName = rule.data.alias + "_" + serie.alias;
         var cellProp = this.getCellProp(rule.data.shapeProp);
         shapeMaps.forEach(function (shape) {
           if (!shape.isHidden() && shape.match(cellProp)) {
@@ -131,15 +130,19 @@ var State = function () {
             _this2.mxcell.serie = serie;
 
             if (rule.toTooltipize(level)) {
+              if (_this2.tooltipHandler == null) _this2.tooltipHandler = new _tooltipHandler["default"](_this2.mxcell);
               var tpColor = null;
               var label = rule.data.tooltipLabel == null || rule.data.tooltipLabel.length === 0 ? serie.alias : rule.data.tooltipLabel;
               if (rule.data.tooltipColors) tpColor = color;
 
-              _this2.addTooltip(tooltipName, label, FormattedValue, tpColor, rule.data.tpDirection);
+              var metric = _this2.tooltipHandler.addMetric().setLabel(label).setValue(FormattedValue).setColor(tpColor);
 
-              if (rule.data.tpGraph) _this2.addTooltipGraph(tooltipName, rule.data.tpGraphType, rule.data.tpGraphSize, serie, rule.data.tpGraphLow, rule.data.tpGraphHigh);
+              if (rule.data.tpGraph) {
+                var graph = metric.addGraph(rule.data.tpGraphType);
+                graph.setColor(tpColor).setSerie(serie).setSize(rule.data.tpGraphSize).setScaling(rule.data.tpGraphLow, rule.data.tpGraphHigh);
+              }
 
-              _this2.updateTooltipDate();
+              _this2.tooltipHandler.updateDate();
             }
 
             if (_this2.globalLevel <= level) {

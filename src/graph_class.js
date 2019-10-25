@@ -1081,7 +1081,7 @@ export default class XGraph {
     // GF Tooltips
     if (cell.GF_tooltipHandler != null) {
       let tooltipHandler = cell.GF_tooltipHandler;
-      let gfDiv = tooltipHandler.getTooltipDiv(div);
+      let gfDiv = tooltipHandler.getDiv(div);
       if (gfDiv !== null) {
         hasTips = true;
       }

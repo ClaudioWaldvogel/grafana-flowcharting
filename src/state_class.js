@@ -101,7 +101,6 @@ export default class State {
       const FormattedValue = rule.getFormattedValue(value);
       const level = rule.getThresholdLevel(value);
       const color = rule.getColorForLevel(level);
-      const tooltipName = rule.data.alias + "_" + serie.alias; 
 
       // SHAPE
       let cellProp = this.getCellProp(rule.data.shapeProp);
@@ -114,22 +113,18 @@ export default class State {
           // tooltips
           if (rule.toTooltipize(level)) {
             // Metrics
+            if (this.tooltipHandler == null) this.tooltipHandler = new TooltipHandler(this.mxcell);
             let tpColor = null;
             let label = (rule.data.tooltipLabel == null || rule.data.tooltipLabel.length === 0) ? serie.alias : rule.data.tooltipLabel;
             if (rule.data.tooltipColors) tpColor = color;
-            this.addTooltip(tooltipName, label, FormattedValue, tpColor, rule.data.tpDirection);
+            let metric = this.tooltipHandler.addMetric().setLabel(label).setValue(FormattedValue).setColor(tpColor);
             // Graph
-            if (rule.data.tpGraph)
-              this.addTooltipGraph(
-                tooltipName,                
-                rule.data.tpGraphType,
-                rule.data.tpGraphSize,
-                serie,
-                rule.data.tpGraphLow,
-                rule.data.tpGraphHigh,
-              );
+            if (rule.data.tpGraph) {
+              let graph = metric.addGraph(rule.data.tpGraphType);
+              graph.setColor(tpColor).setSerie(serie).setSize(rule.data.tpGraphSize).setScaling(rule.data.tpGraphLow,rule.data.tpGraphHigh);
+            }
             // Date
-            this.updateTooltipDate();
+            this.tooltipHandler.updateDate();
           }
 
           // Color Shape
