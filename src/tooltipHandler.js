@@ -19,13 +19,7 @@ export default class TooltipHandler {
   }
 
   /**
-   *
-   *
-   * @param {*} name
-   * @param {*} label
-   * @param {*} value
-   * @param {*} color
-   * @param {*} direction
+   * Add a metric (one value) for tooltip
    * @returns
    * @memberof TooltipHandler
    */
@@ -79,7 +73,6 @@ export default class TooltipHandler {
     div.innerHTML = `${this.lastChange}`;
     return div;
   }
-
 }
 
 /**
@@ -96,12 +89,12 @@ class MetricTooltip {
   //name, label, value, color, direction
   setName(name) {
     this.name = name;
-    return this
+    return this;
   }
 
   setLabel(label) {
     this.label = label;
-    return this
+    return this;
   }
 
   setValue(value) {
@@ -110,12 +103,12 @@ class MetricTooltip {
   }
 
   setColor(color) {
-    if(color != null ) this.color = color;
+    if (color != null) this.color = color;
     return this;
   }
 
-  setDirection(directtion) {
-    this.directtion = directtion;
+  setDirection(direction) {
+    this.direction = direction;
     return this;
   }
 
@@ -126,6 +119,8 @@ class MetricTooltip {
 
   getDiv(parentDiv) {
     let div = document.createElement('div');
+    div.className = 'tooltip-metric';
+    if(this.direction === 'h') div.style='display: inline-block;'
     if (parentDiv != undefined) parentDiv.appendChild(div);
     this.div = div;
     this.getTextDiv(div);
@@ -135,7 +130,7 @@ class MetricTooltip {
 
   getTextDiv(parentDiv) {
     let div = document.createElement('div');
-    div.classname='tooltip-text'
+    div.classname = 'tooltip-text';
     let string = '';
     if (parentDiv != undefined) parentDiv.appendChild(div);
     if (this.label !== undefined) {
@@ -150,21 +145,19 @@ class MetricTooltip {
     let div = document.createElement('div');
     if (parentDiv != undefined) parentDiv.appendChild(div);
     if (this.graphs.size > 0)
-    this.graphs.forEach(graph => {
-      graph.getDiv(div);
-    });
+      this.graphs.forEach(graph => {
+        graph.getDiv(div);
+      });
     return div;
   }
-
 
   addGraph(type) {
     this.graphType = type;
     let graph = null;
-    if (type === "line") graph = new LineGraphTooltip();
+    if (type === 'line') graph = new LineGraphTooltip();
     this.graphs.add(graph);
     return graph;
   }
-
 }
 
 /**
@@ -187,8 +180,8 @@ class GraphTooltip {
     return this;
   }
 
-  setSize(type) {
-    this.type = type;
+  setSize(size) {
+    this.size = size;
     return this;
   }
 
@@ -204,7 +197,7 @@ class GraphTooltip {
   }
 
   setColor(color) {
-    if(color != null ) this.color = color;
+    if (color != null) this.color = color;
     return this;
   }
 
@@ -212,7 +205,6 @@ class GraphTooltip {
     this[key] = value;
     return this;
   }
-
 
   setParentDiv(div) {
     this.parentDiv = div;
@@ -229,7 +221,6 @@ class GraphTooltip {
     }
     return result;
   }
-
 }
 
 class LineGraphTooltip extends GraphTooltip {
@@ -252,7 +243,7 @@ class LineGraphTooltip extends GraphTooltip {
         showLabel: false,
         offset: 0
       },
-      chartPadding: 0,
+      chartPadding: 0
     };
   }
 
@@ -263,14 +254,14 @@ class LineGraphTooltip extends GraphTooltip {
     this.div = div;
     if (parentDiv != undefined) parentDiv.appendChild(div);
     div.className = 'ct-chart ct-golden-section';
-    if (this.size != null) div.style = `width:${metric.graphOptions.size};`;
+    if (this.size != null) div.style = `width:${this.size};`;
     this.data = {
       series: [coor]
     };
-    if (this.low != null) this.chartistOptions.low = metric.graphOptions.low;
-    if (this.high != null) this.chartistOptions.high = metric.graphOptions.high;
+    if (this.low != null) this.chartistOptions.low = this.low;
+    if (this.high != null) this.chartistOptions.high = this.high;
     this.chart = new Chartist.Line(div, this.data, this.chartistOptions);
-    this.chart.on('draw', function (context) {
+    this.chart.on('draw', function(context) {
       u.log(0, 'Chartis.on() context ', context);
       if (context.type === 'line' || context.type === 'area') {
         if (context.type === 'line')

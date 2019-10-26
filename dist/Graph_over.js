@@ -1,5 +1,7 @@
 "use strict";
 
+var _constants = require("constants");
+
 mxTooltipHandler.prototype.show = function (tip, x, y) {
   if (this.destroyed) return;
   if (tip == null) return;
@@ -17,6 +19,7 @@ mxTooltipHandler.prototype.show = function (tip, x, y) {
   }
 
   this.$div.place_tt(x + 20, y);
+  u.log(0, 'mxTooltipHandler.prototype.show div', this.div.innerHTML);
   this.div.style.visibility = '';
   mxUtils.fit(this.div);
 };

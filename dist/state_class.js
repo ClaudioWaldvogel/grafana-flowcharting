@@ -135,7 +135,7 @@ var State = function () {
               var label = rule.data.tooltipLabel == null || rule.data.tooltipLabel.length === 0 ? serie.alias : rule.data.tooltipLabel;
               if (rule.data.tooltipColors) tpColor = color;
 
-              var metric = _this2.tooltipHandler.addMetric().setLabel(label).setValue(FormattedValue).setColor(tpColor);
+              var metric = _this2.tooltipHandler.addMetric().setLabel(label).setValue(FormattedValue).setColor(tpColor).setDirection(rule.data.tpDirection);
 
               if (rule.data.tpGraph) {
                 var graph = metric.addGraph(rule.data.tpGraphType);

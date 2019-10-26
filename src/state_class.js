@@ -117,7 +117,7 @@ export default class State {
             let tpColor = null;
             let label = (rule.data.tooltipLabel == null || rule.data.tooltipLabel.length === 0) ? serie.alias : rule.data.tooltipLabel;
             if (rule.data.tooltipColors) tpColor = color;
-            let metric = this.tooltipHandler.addMetric().setLabel(label).setValue(FormattedValue).setColor(tpColor);
+            let metric = this.tooltipHandler.addMetric().setLabel(label).setValue(FormattedValue).setColor(tpColor).setDirection(rule.data.tpDirection);
             // Graph
             if (rule.data.tpGraph) {
               let graph = metric.addGraph(rule.data.tpGraphType);
