@@ -97,6 +97,7 @@ export default class Flowchart {
     if (this.xgraph === undefined)
       this.xgraph = new XGraph(this.container, this.data.type, this.getContent());
     if (this.data.xml !== undefined && this.data.xml !== null) {
+      if (this.data.download) this.xgraph.setXmlGraph(this.getContent());
       if (this.data.allowDrawio) this.xgraph.allowDrawio(true);
       else this.xgraph.allowDrawio(false);
       this.setOptions();
@@ -308,7 +309,8 @@ export default class Flowchart {
   getContent() {
     u.log(1, `flowchart[${this.data.name}].getContent()`);
     if (this.data.download) {
-      let content = this.loadContent(this.data.url);
+      let url = this.templateSrv.replaceWithText(this.data.url);
+      let content = this.loadContent(url);
       if (content !== null) {
         return content;
       } else return '';

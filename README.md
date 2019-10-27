@@ -29,14 +29,16 @@ See more example at draw.io
 
 # Changelog
 
-## [[0.6.0]](https://algenty.github.io/flowcharting-repository/archives/agenty-flowcharting-panel-0.5.0.zip) - 2019-10-17
+## [[0.6.0 SNAPSHOT]](https://algenty.github.io/flowcharting-repository/archives/agenty-flowcharting-panel-0.6.0-SNAPSHOT.zip) - 2019-10-27
 ### Added  
   - Some optimization on : 
     - tooltips
     - States
   - Tooltip Graph :
-    - Histogram
+    - Histogram ([See example](https://algenty.github.io/flowcharting-repository/images/histogram_ani.png))
+  - Variables support in download input url ([See example](https://algenty.github.io/flowcharting-repository/images/url_download_variable_ani.png))
 ### Fixed
+  - Fix download url on first load.
 
 ## [[0.5.0]](https://algenty.github.io/flowcharting-repository/archives/agenty-flowcharting-panel-0.5.0.zip) - 2019-10-17
 ### Added  

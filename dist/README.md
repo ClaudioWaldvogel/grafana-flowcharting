@@ -29,13 +29,16 @@ See more example at draw.io
 
 # Changelog
 
-## [[0.6.0]](https://algenty.github.io/flowcharting-repository/archives/agenty-flowcharting-panel-0.5.0.zip) - 2019-10-17
+## [[0.6.0 SNAPSHOT]](https://algenty.github.io/flowcharting-repository/archives/agenty-flowcharting-panel-0.6.0-SNAPSHOT.zip) - 2019-10-27
 ### Added  
   - Some optimization on : 
     - tooltips
     - States
-  - 
+  - Tooltip Graph :
+    - Histogram ([See example](https://algenty.github.io/flowcharting-repository/images/histogram_ani.png))
+  - Variables support in download input url ([See example](https://algenty.github.io/flowcharting-repository/images/url_download_variable_ani.png))
 ### Fixed
+  - Fix download url on first load.
 
 ## [[0.5.0]](https://algenty.github.io/flowcharting-repository/archives/agenty-flowcharting-panel-0.5.0.zip) - 2019-10-17
 ### Added  
@@ -138,7 +141,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - [ ] Gradien Mode for color
   - [ ] More than 3 colors
   - [X] Graph in tooltip
-  - [ ] Histogram
+  - [X] Histogram
   - [ ] Merge Graphs
   - [ ] carriage return after new rule in tooltips option
   - [ ] Filter for null values in graph

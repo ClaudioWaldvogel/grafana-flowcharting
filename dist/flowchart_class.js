@@ -80,6 +80,7 @@ var Flowchart = function () {
       if (this.xgraph === undefined) this.xgraph = new _graph_class["default"](this.container, this.data.type, this.getContent());
 
       if (this.data.xml !== undefined && this.data.xml !== null) {
+        if (this.data.download) this.xgraph.setXmlGraph(this.getContent());
         if (this.data.allowDrawio) this.xgraph.allowDrawio(true);else this.xgraph.allowDrawio(false);
         this.setOptions();
         this.xgraph.drawGraph();
@@ -257,7 +258,8 @@ var Flowchart = function () {
       u.log(1, "flowchart[".concat(this.data.name, "].getContent()"));
 
       if (this.data.download) {
-        var content = this.loadContent(this.data.url);
+        var url = this.templateSrv.replaceWithText(this.data.url);
+        var content = this.loadContent(url);
 
         if (content !== null) {
           return content;
