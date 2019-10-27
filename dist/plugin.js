@@ -25,6 +25,10 @@ _jquery["default"].getJSON("".concat(plugin.dirname, "/plugin.json"), function (
   plugin.data = data;
 });
 
+plugin.getVersion = function () {
+  return this.data.info.version;
+};
+
 plugin.getRootPath = function () {
   return this.dirname;
 };
@@ -65,7 +69,7 @@ plugin.popover = function (text, tagBook, tagImage) {
   return "\n  <div id=\"popover\" style=\"display:flex;flex-wrap:wrap;width: 100%;\">\n    <div style=\"flex:1;height:100px;margin-bottom: 20px;\">".concat(desc, "</div>\n    <div style=\"flex:1;height:100px;margin-bottom: 20px;\">").concat(book, "</div>\n    <div style=\"flex-basis: 100%;height:100px;margin-bottom:20px;\">").concat(image, "</div>\n  </div>");
 };
 
-plugin.logLevel = 0;
+plugin.logLevel = 1;
 plugin.logDisplay = true;
 window.GF_PLUGIN = window.GF_PLUGIN || plugin;
 var _default = plugin;

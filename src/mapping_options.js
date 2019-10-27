@@ -75,7 +75,7 @@ export class MappingOptionsCtrl {
     this.mappingTypes = [{ text: 'Value to text', value: 1 }, { text: 'Range to text', value: 2 }];
     this.tpGraphType = [
       { text: 'Line', value: 'line'},
-      // { text: 'Histogram', value: 'bar'},
+      { text: 'Histogram', value: 'bar'},
     ];
     this.tpGraphSize = [
       { text: 'Adjustable', value: '100%'},

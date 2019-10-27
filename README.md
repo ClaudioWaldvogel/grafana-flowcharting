@@ -29,7 +29,16 @@ See more example at draw.io
 
 # Changelog
 
-## [[0.5.0 SNAPSHOT]](https://algenty.github.io/flowcharting-repository/archives/agenty-flowcharting-panel-0.5.0-SNAPSHOT.zip) - 2019-10-13
+## [[0.6.0]](https://algenty.github.io/flowcharting-repository/archives/agenty-flowcharting-panel-0.5.0.zip) - 2019-10-17
+### Added  
+  - Some optimization on : 
+    - tooltips
+    - States
+  - Tooltip Graph :
+    - Histogram
+### Fixed
+
+## [[0.5.0]](https://algenty.github.io/flowcharting-repository/archives/agenty-flowcharting-panel-0.5.0.zip) - 2019-10-17
 ### Added  
   - 2 new modes for "Update text value" ([See example](https://algenty.github.io/flowcharting-repository/images/append_mode_ani.png))
     - Append (Space) : Concat metrics with a space as a separator
@@ -130,7 +139,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - [ ] Gradien Mode for color
   - [ ] More than 3 colors
   - [X] Graph in tooltip
-  - [ ] Histogram
+  - [X] Histogram
   - [ ] Merge Graphs
   - [ ] carriage return after new rule in tooltips option
   - [ ] Filter for null values in graph

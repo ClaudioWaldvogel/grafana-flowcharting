@@ -16,6 +16,10 @@ $.getJSON(`${plugin.dirname}/plugin.json`, (data) => {
   plugin.data = data;
 });
 
+plugin.getVersion = function () {
+  return this.data.info.version;
+};
+
 plugin.getRootPath = function () {
   return this.dirname;
 };
@@ -62,7 +66,7 @@ plugin.popover = function (text, tagBook, tagImage) {
   </div>`;
 };
 
-plugin.logLevel = 0;
+plugin.logLevel = 1;
 plugin.logDisplay = true;
 
 window.GF_PLUGIN = window.GF_PLUGIN || plugin;

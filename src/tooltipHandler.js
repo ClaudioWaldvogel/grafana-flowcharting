@@ -52,7 +52,10 @@ export default class TooltipHandler {
   }
 
   getDiv(parentDiv) {
-    // if (this.div != null) return this.div;
+    if (this.div != null) {
+      if (parentDiv != undefined) parentDiv.appendChild(this.div);
+      return this.div;
+    }
     if (!this.checked) return null;
     let div = document.createElement('div');
     if (parentDiv != undefined) parentDiv.appendChild(div);
@@ -62,6 +65,7 @@ export default class TooltipHandler {
         metric.getDiv(div);
       });
     }
+    this.div = div;
     return div;
   }
 
@@ -120,7 +124,7 @@ class MetricTooltip {
   getDiv(parentDiv) {
     let div = document.createElement('div');
     div.className = 'tooltip-metric';
-    if(this.direction === 'h') div.style='display: inline-block;'
+    if (this.direction === 'h') div.style = 'display: inline-block;';
     if (parentDiv != undefined) parentDiv.appendChild(div);
     this.div = div;
     this.getTextDiv(div);
@@ -155,6 +159,7 @@ class MetricTooltip {
     this.graphType = type;
     let graph = null;
     if (type === 'line') graph = new LineGraphTooltip();
+    if (type === 'bar') graph = new BarGraphTooltip();
     this.graphs.add(graph);
     return graph;
   }
@@ -254,39 +259,99 @@ class LineGraphTooltip extends GraphTooltip {
     this.div = div;
     if (parentDiv != undefined) parentDiv.appendChild(div);
     div.className = 'ct-chart ct-golden-section';
-    if (this.size != null) div.style = `width:${this.size};`;
     this.data = {
       series: [coor]
     };
+    if (this.size != null) div.style = `width:${this.size};`;
     if (this.low != null) this.chartistOptions.low = this.low;
     if (this.high != null) this.chartistOptions.high = this.high;
     this.chart = new Chartist.Line(div, this.data, this.chartistOptions);
-    this.chart.on('draw', function(context) {
-      u.log(0, 'Chartis.on() context ', context);
-      if (context.type === 'line' || context.type === 'area') {
-        if (context.type === 'line')
-          context.element.attr({
+    this.chart.on('draw', function(data) {
+      // u.log(1, 'Chartis.on() context ', data);
+      if (data.type === 'line' || data.type === 'area') {
+        if (data.type === 'line')
+          data.element.attr({
             style: `stroke: ${color}`
           });
-        if (context.type === 'area')
-          context.element.attr({
+        if (data.type === 'area')
+          data.element.attr({
             style: `fill: ${color}`
           });
-        context.element.animate({
+        data.element.animate({
           d: {
-            begin: 1000 * context.index,
+            begin: 1000 * data.index,
             dur: 1000,
-            from: context.path
+            from: data.path
               .clone()
               .scale(1, 0)
-              .translate(0, context.chartRect.height())
+              .translate(0, data.chartRect.height())
               .stringify(),
-            to: context.path.clone().stringify(),
+            to: data.path.clone().stringify(),
             easing: Chartist.Svg.Easing.easeOutQuint
           }
         });
       }
     });
     return div;
+  }
+}
+
+class BarGraphTooltip extends GraphTooltip {
+  constructor() {
+    super();
+    this.type = 'bar';
+    this.chartistOptions = {
+      showPoint: false,
+      showLine: true,
+      showArea: true,
+      fullWidth: true,
+      showLabel: false,
+      axisX: {
+        showGrid: false,
+        showLabel: false,
+        offset: 0
+      },
+      axisY: {
+        showGrid: false,
+        showLabel: false,
+        offset: 0
+      },
+      chartPadding: 0
+    };
+  }
+
+  getDiv(parentDiv) {
+    let coor = GraphTooltip.array2Coor(this.serie.flotpairs);
+    let div = document.createElement('div');
+    let color = this.color;
+    if (parentDiv != undefined) parentDiv.appendChild(div);
+    this.data = {
+      series: [coor]
+    };
+    div.className = 'ct-chart ct-golden-section';
+    if (this.size != null) div.style = `width:${this.size};`;
+    if (this.low != null) this.chartistOptions.low = this.low;
+    if (this.high != null) this.chartistOptions.high = this.high;
+    let chart = new Chartist.Bar(div, this.data, this.chartistOptions);
+    let seq = 0,
+      delays = Math.round(50 / (coor.length / 10)),
+      durations = Math.round(250 / (coor.length / 10));
+    chart.on('draw', function(data) {
+      if (data.type === 'bar') {
+        data.element.attr({
+          style: `stroke: ${color}`
+        });
+        seq++;
+        data.element.animate({
+          opacity: {
+            begin: seq * delays,
+            dur: durations,
+            from: 0,
+            to: 1,
+            easing: 'ease'
+          }
+        });
+      }
+    });
   }
 }

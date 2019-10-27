@@ -182,6 +182,9 @@ var MappingOptionsCtrl = function () {
     this.tpGraphType = [{
       text: 'Line',
       value: 'line'
+    }, {
+      text: 'Histogram',
+      value: 'bar'
     }];
     this.tpGraphSize = [{
       text: 'Adjustable',
