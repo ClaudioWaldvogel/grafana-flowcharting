@@ -14,6 +14,12 @@ export default class TooltipHandler {
     this.metrics = new Set();
   }
 
+  /**
+   *Return if tooltip is available
+   *
+   * @returns
+   * @memberof TooltipHandler
+   */
   isChecked() {
     return this.checked;
   }
@@ -30,6 +36,11 @@ export default class TooltipHandler {
     return metric;
   }
 
+  /**
+   *Update date in tooltip
+   *
+   * @memberof TooltipHandler
+   */
   updateDate() {
     let current_datetime = new Date();
     this.lastChange =
