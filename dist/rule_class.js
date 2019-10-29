@@ -517,6 +517,8 @@ var Rule = function () {
       }
 
       if (this.data.type === 'string') {
+        if (value === null) return '-';
+
         if (_.isArray(value)) {
           value = value.join(', ');
         }

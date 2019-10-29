@@ -621,6 +621,7 @@ export default class Rule {
     }
 
     if (this.data.type === 'string') {
+      if (value === null) return '-';
       if (_.isArray(value)) {
         value = value.join(', ');
       }
@@ -660,7 +661,6 @@ export default class Rule {
       // }
       return date.format(this.data.dateFormat);
     }
-
     return value;
   }
 
