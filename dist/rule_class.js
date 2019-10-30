@@ -478,13 +478,18 @@ var Rule = function () {
     key: "getValueForSerie",
     value: function getValueForSerie(serie) {
       if (this.matchSerie(serie)) {
-        var value = _.get(serie.stats, this.data.aggregation);
+        try {
+          var value = _.get(serie.stats, this.data.aggregation);
 
-        if (value === undefined || value === null) {
-          value = serie.datapoints[serie.datapoints.length - 1][0];
+          if (value === undefined || value === null) {
+            value = serie.datapoints[serie.datapoints.length - 1][0];
+          }
+
+          return value;
+        } catch (error) {
+          u.log(3, "datapoint for serie is null", error);
+          return null;
         }
-
-        return value;
       }
 
       return '-';
@@ -517,7 +522,7 @@ var Rule = function () {
       }
 
       if (this.data.type === 'string') {
-        if (value === null) return '-';
+        if (value == null) value = 'null';
 
         if (_.isArray(value)) {
           value = value.join(', ');

@@ -180,7 +180,7 @@ export default class Rule {
    * @memberof Rule
    */
   highlightCells() {
-    if(this.states) {
+    if (this.states) {
       this.states.forEach(state => {
         state.highlightCell();
       });
@@ -193,7 +193,7 @@ export default class Rule {
    * @memberof Rule
    */
   unhighlightCells() {
-    if(this.states) {
+    if (this.states) {
       this.states.forEach(state => {
         state.unhighlightCell();
       });
@@ -588,11 +588,16 @@ export default class Rule {
 
   getValueForSerie(serie) {
     if (this.matchSerie(serie)) {
-      let value = _.get(serie.stats, this.data.aggregation);
-      if (value === undefined || value === null) {
-        value = serie.datapoints[serie.datapoints.length - 1][0];
+      try {
+        let value = _.get(serie.stats, this.data.aggregation);
+        if (value === undefined || value === null) {
+          value = serie.datapoints[serie.datapoints.length - 1][0];
+        }
+        return value;
+      } catch (error) {
+        u.log(3, "datapoint for serie is null", error);
+        return null;
       }
-      return value;
     }
     return '-';
   }
@@ -621,7 +626,7 @@ export default class Rule {
     }
 
     if (this.data.type === 'string') {
-      if (value === null) return '-';
+      if (value == null) value = 'null';
       if (_.isArray(value)) {
         value = value.join(', ');
       }
@@ -703,8 +708,8 @@ export default class Rule {
       0,
       // Number of digits right of decimal point.
       (match[1] ? match[1].length : 0) -
-        // Adjust for scientific notation.
-        (match[2] ? +match[2] : 0)
+      // Adjust for scientific notation.
+      (match[2] ? +match[2] : 0)
     );
   }
 }
@@ -985,7 +990,7 @@ class ValueMap {
   isHidden() {
     return this.data.hidden;
   }
-  
+
   export() {
     return {
       value: this.data.value,
