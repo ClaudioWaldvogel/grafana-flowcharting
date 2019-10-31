@@ -522,7 +522,9 @@ var Rule = function () {
       }
 
       if (this.data.type === 'string') {
-        if (value == null) value = 'null';
+        if (value === null || value === void 0) {
+          return 'null';
+        }
 
         if (_.isArray(value)) {
           value = value.join(', ');
@@ -549,7 +551,7 @@ var Rule = function () {
         }
 
         if (value === null || value === void 0) {
-          return '-';
+          return 'null';
         }
       }
 

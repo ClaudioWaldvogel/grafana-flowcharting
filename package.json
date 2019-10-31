@@ -81,7 +81,6 @@
     "moment": "^2.24.0",
     "mxgraph": "^4.0.4",
     "node": "^11.9.0",
-    "node-sass": "^4.11.0",
     "pako": "^1.0.10",
     "prettier": "^1.17.0",
     "react": "^16.8.6",
@@ -94,6 +93,7 @@
     "webpack": "^4.29.1"
   },
   "dependencies": {
-    "eslint-config-airbnb-base": "^13.1.0"
+    "eslint-config-airbnb-base": "^13.1.0",
+    "node-sass": "^4.13.0"
   }
 }

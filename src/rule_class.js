@@ -626,7 +626,10 @@ export default class Rule {
     }
 
     if (this.data.type === 'string') {
-      if (value == null) value = 'null';
+      if (value === null || value === void 0) {
+        value = 'null';
+      }
+      
       if (_.isArray(value)) {
         value = value.join(', ');
       }
@@ -648,8 +651,9 @@ export default class Rule {
       }
 
       if (value === null || value === void 0) {
-        return '-';
+        return 'null';
       }
+
     }
 
     if (this.data.type === 'date') {
