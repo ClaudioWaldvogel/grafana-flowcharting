@@ -126,6 +126,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - [X] Add data in tooltip (done in 0.4.0)
   - [X] Use variables/templates in graph (done in 0.4.0)
   - [X] Add custom stencils/libs from draw.io (done in 0.4.0)
+  - [ ] Progressive change color like gauge
   - [ ] Support light theme
   - [ ] Annotation
   - [ ] Tooltips on text and arrow/line
