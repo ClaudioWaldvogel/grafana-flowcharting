@@ -463,7 +463,7 @@ export default class State {
     this.styleKeys.forEach(key => {
       if (this.matchedStyle[key]) {
         const color = this.currentColors[key];
-        this.xgraph.setStyleCell(this.mxcell, key, color);
+        this.xgraph.setStyleCell(this.mxcell, key, color, true);
         if (color !== this.originalColors[key]) this.changedStyle[key] = true;
       }
     });

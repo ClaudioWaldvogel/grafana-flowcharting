@@ -378,7 +378,7 @@ var State = function () {
         if (_this6.matchedStyle[key]) {
           var color = _this6.currentColors[key];
 
-          _this6.xgraph.setStyleCell(_this6.mxcell, key, color);
+          _this6.xgraph.setStyleCell(_this6.mxcell, key, color, true);
 
           if (color !== _this6.originalColors[key]) _this6.changedStyle[key] = true;
         }

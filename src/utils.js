@@ -1,5 +1,6 @@
 const pako = require('pako');
 const vkbeautify = require('vkbeautify');
+const colorconv = require('color-normalize');
 
 // sources :
 // https://jgraph.github.io/drawio-tools/tools/convert.html
@@ -219,6 +220,39 @@ module.exports = {
       this.log(3, 'Error in prettify', error);
       return text;
     }
+  },
+
+  generateColor(colorStart, colorEnd, colorCount) {
+    // The beginning of your gradient
+    let start = colorconv(colorStart, 'uint8');
+    let end = colorconv(colorEnd, 'uint8');
+    // if (colorStart.charAt(0) === '#') start = colorconv.hex.lab(colorStart);
+    // else start = colorconv.rgb.lab(colorStart);
+    // let end = [];
+    // if (colorEnd.charAt(0) === '#') end = colorconv.rgb(colorEnd);
+    // else end = colorconv.rgb.lab(colorEnd);
+
+    // The number of colors to compute
+    var len = colorCount;
+
+    //Alpha blending amount
+    var alpha = 0.0;
+
+    var saida = [];
+
+    for (i = 0; i < len; i++) {
+      var c = [];
+      alpha += 1.0 / len;
+
+      c[0] = start[0] * alpha + (1 - alpha) * end[0];
+      c[1] = start[1] * alpha + (1 - alpha) * end[1];
+      c[2] = start[2] * alpha + (1 - alpha) * end[2];
+      c[3] = start[3] * alpha + (1 - alpha) * end[3];
+
+      saida.push(`rgba(${c[0]},${c[1]},${c[2]},${c[3]})`);
+    }
+
+    return saida;
   },
 
   prettifyJSON(text) {

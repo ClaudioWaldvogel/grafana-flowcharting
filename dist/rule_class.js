@@ -523,7 +523,7 @@ var Rule = function () {
 
       if (this.data.type === 'string') {
         if (value === null || value === void 0) {
-          return 'null';
+          value = 'null';
         }
 
         if (_.isArray(value)) {

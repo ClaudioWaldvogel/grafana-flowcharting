@@ -621,23 +621,6 @@ export default class XGraph {
   }
 
   /**
-   *Find and return current cell with matching pattern for id or value
-   *
-   * @param {string} prop - "id"|"value"
-   * @param {string} pattern - regex
-   * @returns {Array} strings of id
-   * @memberof XGraph
-   */
-  // NOT USED
-  // findCurrentCells(prop, pattern) {
-  //   const cells = this.getCurrentCells(prop);
-  //   const result = _.find(cells, cell => {
-  //     u.matchString(cell, pattern);
-  //   });
-  //   return result;
-  // }
-
-  /**
    *Find and return original cell with matching pattern for id or value
    *
    * @param {string} prop - "id"|"value"
@@ -677,29 +660,35 @@ export default class XGraph {
     return null;
   }
 
-  // NOT USED
-  // findCurrentMxCells(prop, pattern) {
-  //   const cells = [];
-  //   _.each(this.getMxCells(), mxcell => {
-  //     if (prop === 'id') {
-  //       const id = mxcell.getId();
-  //       if (u.matchString(id, pattern)) cells.push(mxcell);
-  //     } else if (prop === 'value') {
-  //       const value = this.getLabel(mxcell);
-  //       if (u.matchString(value, pattern)) cells.push(mxcell);
-  //     }
-  //   });
-  //   return cells;
-  // }
-
   getStyleCell(mxcell, style) {
     const state = this.graph.view.getState(mxcell);
     if (state) return state.style[style];
     return null;
   }
 
-  setStyleCell(mxcell, style, color) {
-    this.graph.setCellStyles(style, color, [mxcell]);
+  setStyleCell(mxcell, style, color, animate = false) {
+    if (animate) {
+      try {
+        let endColor = this.getStyleCell(mxcell, style);
+        let startColor = color;
+        let steps = u.generateColor(startColor, endColor, 10);
+        let count = 0;
+        let self = this;
+        function graduate(count, steps) {
+          if (count < steps.length) {
+            self.graph.setCellStyles(style, steps[count], [mxcell]);
+            // var caller = arguments.callee;
+            window.setTimeout(function() {
+              graduate(count + 1, steps);
+            }, 40);
+          }
+        }
+        graduate(count, steps);
+      } catch (error) {
+        u.log(3,"Error on graduate color",error);
+        this.graph.setCellStyles(style, color, [mxcell]);
+      }
+    } else this.graph.setCellStyles(style, color, [mxcell]);
   }
 
   // eslint-disable-next-line class-methods-use-this
@@ -1095,5 +1084,4 @@ export default class XGraph {
     if (hasTips) return div;
     return '';
   }
-
 }
