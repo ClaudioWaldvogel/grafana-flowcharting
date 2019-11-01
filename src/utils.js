@@ -226,12 +226,6 @@ module.exports = {
     // The beginning of your gradient
     let start = colorconv(colorStart, 'uint8');
     let end = colorconv(colorEnd, 'uint8');
-    // if (colorStart.charAt(0) === '#') start = colorconv.hex.lab(colorStart);
-    // else start = colorconv.rgb.lab(colorStart);
-    // let end = [];
-    // if (colorEnd.charAt(0) === '#') end = colorconv.rgb(colorEnd);
-    // else end = colorconv.rgb.lab(colorEnd);
-
     // The number of colors to compute
     var len = colorCount;
 
