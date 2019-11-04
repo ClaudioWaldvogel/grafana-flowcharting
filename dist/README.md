@@ -29,7 +29,7 @@ See more example at draw.io
 
 # Changelog
 
-## [[0.6.0 SNAPSHOT]](https://algenty.github.io/flowcharting-repository/archives/agenty-flowcharting-panel-0.6.0-SNAPSHOT.zip) - 2019-10-27
+## [[0.6.0 SNAPSHOT]](https://algenty.github.io/flowcharting-repository/archives/agenty-flowcharting-panel-0.6.0-SNAPSHOT.zip) - 2019-11-04
 ### Added  
   - Some optimization on : 
     - tooltips
@@ -37,9 +37,11 @@ See more example at draw.io
   - Tooltip Graph :
     - Histogram ([See example](https://algenty.github.io/flowcharting-repository/images/histogram_ani.png))
   - Variables support in download input url ([See example](https://algenty.github.io/flowcharting-repository/images/url_download_variable_ani.png))
+  - Add graduate effect when color changed
 ### Fixed
   - Fix download url on first load.
   - Fix value null for string [(issue #65)](https://github.com/algenty/grafana-flowcharting/issues/65)
+  - Fix bug "subways" Editor [(issue #73)](https://github.com/algenty/grafana-flowcharting/issues/73)
 
 ## [[0.5.0]](https://algenty.github.io/flowcharting-repository/archives/agenty-flowcharting-panel-0.5.0.zip) - 2019-10-17
 ### Added  
