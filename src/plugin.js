@@ -1,74 +1,149 @@
 import $ from 'jquery';
+export default class FlowChartingPlugin {
+  /* @ngInject */
+  constructor(context_root) {
+    this.contextroot = context_root;
+    this.dirname = this.contextroot + '/public/plugins/agenty-flowcharting-panel/';
+    this.data = this.loadJson();
+    this.repo = this.getRepo();
+    this.logLevel = 0;
+    this.logDisplay = true;
+  }
 
-const plugin = {};
-plugin.dirname = `${__dirname}/`;
-plugin.repository = 'https://algenty.github.io/flowcharting-repository/';
-plugin.mxBasePath = `${plugin.dirname}libs/mxgraph/javascript/dist/`;
-plugin.mxImagePath = `${plugin.mxBasePath}images/`;
-plugin.partialPath = `${plugin.dirname}/partials/`;
-plugin.data = {};
+  static init($scope, $injector, $rootScope, templateSrv) {
+    let plugin;
+    if($rootScope == undefined) {
+      plugin = new FlowChartingPlugin(__dirname);
+    }
+    else {
+      plugin = new FlowChartingPlugin($rootScope.appSubUrl);
+      plugin.$rootScope = $rootScope;
+      plugin.templateSrv = templateSrv;
+    }
+    window.GF_PLUGIN = plugin;
+    return plugin;
+  }
 
-$.ajaxSetup({
-  async: false,
-});
+  getLevel() {
+    return this.logLevel;
+  }
 
-$.getJSON(`${plugin.dirname}/plugin.json`, (data) => {
-  plugin.data = data;
-});
+  setLevel(level) {
+    this.logLevel = level;
+  }
 
-plugin.getVersion = function () {
-  return this.data.info.version;
-};
+  isLogEnable() {
+    return this.logDisplay;
+  }
 
-plugin.getRootPath = function () {
-  return this.dirname;
-};
+  setLog(enable) {
+    this.logDisplay = enable;
+  }
 
-plugin.getLibsPath = function () {
-  return `${this.dirname}/libs`;
-};
+  getRepo() {
+    let url = null;
+    this.data.info.links.forEach(link => {
+      if (link.name === 'Documentation') url =  link.url;
+    });
+    return url;
+  }
 
-plugin.getShapesPath = function () {
-  return `${this.dirname}libs/shapes`;
-};
+  loadJson() {
+    let data;
+    $.ajaxSetup({
+      async: false
+    });
 
-plugin.getMxBasePath = function () {
-  return this.mxBasePath;
-};
+    $.getJSON(`${this.dirname}/plugin.json`, obj => {
+      data = obj;
+    });
+    return data;
+  }
 
-plugin.getMxImagePath = function () {
-  return this.mxImagePath;
-};
+  getRootPath() {
+    return this.dirname;
+  }
 
-plugin.getName = function () {
-  return this.data.id;
-};
+  getRepoPath() {}
 
-plugin.getPartialPath = function () {
-  return this.partialPath;
-};
+  getVersion() {
+    return this.data.info.version;
+  }
 
-// eslint-disable-next-line func-names
-plugin.popover = function (text, tagBook, tagImage) {
-  const url = this.repository;
-  const images = `${this.repository}images/`;
-  const textEncoded = String(text).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-  const desc = `${textEncoded}`;
-  let book = '';
-  let image = '';
-  if (tagBook) book = `<a href="${url}${tagBook}" target="_blank"><i class="fa fa-book fa-fw"></i>Help</a>`;
-  if (tagImage) image = `<a href="${images}${tagImage}.png" target="_blank"><i class="fa fa-image fa-fw"></i>Example</a>`;
-  return `
-  <div id="popover" style="display:flex;flex-wrap:wrap;width: 100%;">
-    <div style="flex:1;height:100px;margin-bottom: 20px;">${desc}</div>
-    <div style="flex:1;height:100px;margin-bottom: 20px;">${book}</div>
-    <div style="flex-basis: 100%;height:100px;margin-bottom:20px;">${image}</div>
-  </div>`;
-};
+  getLibsPath() {
+    return `${this.getRootPath()}libs`;
+  }
 
-plugin.logLevel = 3;
-plugin.logDisplay = true;
+  getShapesPath() {
+    return `${this.getLibsPath()}libs/shapes`;
+  }
 
-window.GF_PLUGIN = window.GF_PLUGIN || plugin;
+  getMxBasePath() {
+    return `${this.getLibsPath()}/mxgraph/javascript/dist/`;
+  }
 
-export default plugin;
+  getMxImagePath() {
+    return `${this.getMxBasePath()}images/`;
+  }
+
+  getName() {
+    return this.data.id;
+  }
+
+  getPartialPath() {
+    return `${this.getRootPath}/partials/`;
+  }
+
+  popover(text, tagBook, tagImage) {
+    const url = plugin.repository;
+    const images = `${this.repo}images/`;
+    const textEncoded = String(text)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+    const desc = `${textEncoded}`;
+    let book = '';
+    let image = '';
+    if (tagBook)
+      book = `<a href="${url}${tagBook}" target="_blank"><i class="fa fa-book fa-fw"></i>Help</a>`;
+    if (tagImage)
+      image = `<a href="${images}${tagImage}.png" target="_blank"><i class="fa fa-image fa-fw"></i>Example</a>`;
+    return `
+    <div id="popover" style="display:flex;flex-wrap:wrap;width: 100%;">
+      <div style="flex:1;height:100px;margin-bottom: 20px;">${desc}</div>
+      <div style="flex:1;height:100px;margin-bottom: 20px;">${book}</div>
+      <div style="flex-basis: 100%;height:100px;margin-bottom:20px;">${image}</div>
+    </div>`;
+  }
+
+  log(level, title, obj) {
+    // 0 : DEBUG
+    // 1 : INFO
+    // 2 : WARN
+    // 3 : ERROR
+    // eslint-disable-next-line no-undef
+    if (this.logDisplay !== undefined && this.logDisplay === true) {
+      // eslint-disable-next-line no-undef
+      if (this.logLevel !== undefined && level >= this.logLevel) {
+        if (level === 3) {
+          console.error(`ERROR : ${title}`, obj);
+        }
+        if (level === 2) {
+          console.warn(` WARN : ${title}`, obj);
+          return;
+        }
+        if (level === 1) {
+          console.info(` INFO : ${title}`, obj);
+          return;
+        }
+        if (level === 0) {
+          console.debug(`DEBUG : ${title}`, obj);
+          return;
+        }
+      }
+    }
+  }
+}
+/* @ngInject */
+// FlowChartingPlugin.init();

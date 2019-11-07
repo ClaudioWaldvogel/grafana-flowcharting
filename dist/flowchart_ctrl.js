@@ -5,6 +5,8 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.MetricsPanelCtrl = exports.FlowchartCtrl = void 0;
 
+var _plugin = _interopRequireDefault(require("./plugin"));
+
 var _sdk = require("app/plugins/sdk");
 
 var _time_series = _interopRequireDefault(require("app/core/time_series2"));
@@ -54,7 +56,10 @@ var FlowchartCtrl = function (_MetricsPanelCtrl) {
     _classCallCheck(this, FlowchartCtrl);
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(FlowchartCtrl).call(this, $scope, $injector));
-    _this.version = window.GF_PLUGIN.getVersion();
+
+    _plugin["default"].init($scope, $injector, $rootScope, templateSrv);
+
+    _this.version = GF_PLUGIN.getVersion();
     _this.$rootScope = $rootScope;
     _this.$scope = $scope;
     _this.templateSrv = templateSrv;
@@ -110,28 +115,28 @@ var FlowchartCtrl = function (_MetricsPanelCtrl) {
   }, {
     key: "onRefresh",
     value: function onRefresh() {
-      u.log(1, 'FlowchartCtrl.onRefresh()');
+      GF_PLUGIN.log(1, 'FlowchartCtrl.onRefresh()');
       this.onRender();
     }
   }, {
     key: "onVarChanged",
     value: function onVarChanged() {
-      u.log(1, 'FlowchartCtrl.onVarChanged()');
+      GF_PLUGIN.log(1, 'FlowchartCtrl.onVarChanged()');
       this.flowchartHandler.sourceChanged();
       this.flowchartHandler.render();
     }
   }, {
     key: "onRender",
     value: function onRender() {
-      u.log(1, 'FlowchartCtrl.onRender()');
+      GF_PLUGIN.log(1, 'FlowchartCtrl.onRender()');
     }
   }, {
     key: "onDataReceived",
     value: function onDataReceived(dataList) {
-      u.log(1, 'FlowchartCtrl.onDataReceived()');
-      u.log(0, 'FlowchartCtrl.onDataReceived() dataList', dataList);
+      GF_PLUGIN.log(1, 'FlowchartCtrl.onDataReceived()');
+      GF_PLUGIN.log(0, 'FlowchartCtrl.onDataReceived() dataList', dataList);
       this.series = dataList.map(this.seriesHandler.bind(this));
-      u.log(0, 'FlowchartCtrl.onDataReceived() this.series', dataList);
+      GF_PLUGIN.log(0, 'FlowchartCtrl.onDataReceived() this.series', dataList);
       this.flowchartHandler.dataChanged();
       this.render();
     }
@@ -152,7 +157,7 @@ var FlowchartCtrl = function (_MetricsPanelCtrl) {
   }, {
     key: "link",
     value: function link(scope, elem, attrs, ctrl) {
-      u.log(1, 'FlowchartCtrl.link()');
+      GF_PLUGIN.log(1, 'FlowchartCtrl.link()');
       var newRulesData = [];
       this.rulesHandler = new _rulesHandler["default"](scope, newRulesData);
 
@@ -207,7 +212,7 @@ var FlowchartCtrl = function (_MetricsPanelCtrl) {
   }, {
     key: "seriesHandler",
     value: function seriesHandler(seriesData) {
-      u.log(1, 'FlowchartCtrl.seriesHandler()');
+      GF_PLUGIN.log(1, 'FlowchartCtrl.seriesHandler()');
       var series = new _time_series["default"]({
         datapoints: seriesData.datapoints,
         alias: seriesData.target,

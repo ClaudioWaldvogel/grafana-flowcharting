@@ -8,8 +8,6 @@ exports.MappingOptionsCtrl = void 0;
 
 var _kbn = _interopRequireDefault(require("app/core/utils/kbn"));
 
-var _plugin = require("./plugin");
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }

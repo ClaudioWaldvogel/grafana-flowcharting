@@ -1,4 +1,5 @@
 import { loadPluginCss } from 'app/plugins/sdk';
+// import { FlowChartingPlugin } from './plugin';
 import { FlowchartCtrl } from './flowchart_ctrl';
 
 
