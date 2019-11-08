@@ -101,7 +101,7 @@ var FlowchartCtrl = function (_MetricsPanelCtrl) {
 
     _this.dashboard.events.on('template-variable-value-updated', _this.onVarChanged.bind(_assertThisInitialized(_this)), $scope);
 
-    $rootScope.onAppEvent('template-variable-value-updated', _this.onVarChanged.bind(_assertThisInitialized(_this)), $scope);
+    if ($scope.$root.onAppEvent) $scope.$root.onAppEvent('template-variable-value-updated', _this.onVarChanged.bind(_assertThisInitialized(_this)), $scope);
     return _this;
   }
 

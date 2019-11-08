@@ -14,6 +14,7 @@ var _sdk = require("app/plugins/sdk");
 
 var _flowchart_ctrl = require("./flowchart_ctrl");
 
+console.log("FlowCharting module.js Time : ", Date.now());
 (0, _sdk.loadPluginCss)({
   dark: 'plugins/agenty-flowcharting-panel/css/flowchart.dark.css',
   light: 'plugins/agenty-flowcharting-panel/css/flowchart.light.css'

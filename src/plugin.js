@@ -3,21 +3,25 @@ export default class FlowChartingPlugin {
   /* @ngInject */
   constructor(context_root) {
     this.contextroot = context_root;
-    this.dirname = this.contextroot + '/public/plugins/agenty-flowcharting-panel/';
+    FlowChartingPlugin.defaultContextRoot = FlowChartingPlugin
+    this.dirname = context_root;
     this.data = this.loadJson();
     this.repo = this.getRepo();
-    this.logLevel = 0;
+    this.logLevel = 3;
     this.logDisplay = true;
   }
 
   static init($scope, $injector, $rootScope, templateSrv) {
     let plugin;
-    if($rootScope == undefined) {
-      plugin = new FlowChartingPlugin(__dirname);
+    if($scope == undefined) {
+      if (__dirname.length >0) plugin = new FlowChartingPlugin(__dirname);
+      else plugin = new FlowChartingPlugin(FlowChartingPlugin.defaultContextRoot);
     }
     else {
-      plugin = new FlowChartingPlugin($rootScope.appSubUrl);
+      plugin = new FlowChartingPlugin($scope.$root.appSubUrl + FlowChartingPlugin.defaultContextRoot);
       plugin.$rootScope = $rootScope;
+      plugin.$scope = $scope;
+      plugin.$injector = $injector;
       plugin.templateSrv = templateSrv;
     }
     window.GF_PLUGIN = plugin;
@@ -30,6 +34,10 @@ export default class FlowChartingPlugin {
 
   setLevel(level) {
     this.logLevel = level;
+  }
+
+  getTemplateSrv() {
+    return this.templateSrv;
   }
 
   isLogEnable() {
@@ -64,9 +72,7 @@ export default class FlowChartingPlugin {
     return this.dirname;
   }
 
-  getRepoPath() {}
-
-  getVersion() {
+   getVersion() {
     return this.data.info.version;
   }
 
@@ -145,5 +151,7 @@ export default class FlowChartingPlugin {
     }
   }
 }
-/* @ngInject */
+FlowChartingPlugin.defaultContextRoot = '/public/plugins/agenty-flowcharting-panel/';
+
+/**  @ngInject **/
 // FlowChartingPlugin.init();

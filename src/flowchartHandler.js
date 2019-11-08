@@ -150,6 +150,7 @@ export default class FlowchartHandler {
    */
   render() {
     u.log(1, 'flowchartHandler.render()');
+    console.log("FlowCharting render begin Time : ", Date.now());
     // not repeat render if mouse down
     this.optionsFlag = true;
     if (!this.mousedown) {
@@ -191,6 +192,7 @@ export default class FlowchartHandler {
         this.firstLoad = false;
       }
     }
+    console.log("FlowCharting render end Time : ", Date.now());
   }
 
   /**

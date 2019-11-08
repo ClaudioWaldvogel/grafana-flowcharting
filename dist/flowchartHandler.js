@@ -122,6 +122,7 @@ var FlowchartHandler = function () {
     key: "render",
     value: function render() {
       u.log(1, 'flowchartHandler.render()');
+      console.log("FlowCharting render begin Time : ", Date.now());
       this.optionsFlag = true;
 
       if (!this.mousedown) {
@@ -152,6 +153,8 @@ var FlowchartHandler = function () {
           this.firstLoad = false;
         }
       }
+
+      console.log("FlowCharting render end Time : ", Date.now());
     }
   }, {
     key: "sourceChanged",
