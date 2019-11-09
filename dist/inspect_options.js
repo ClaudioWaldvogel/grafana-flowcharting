@@ -72,7 +72,7 @@ var InspectOptionsCtrl = function () {
     key: "onChangeId",
     value: function onChangeId(state) {
       if (state.newcellId !== undefined && state.cellId !== state.newcellId) {
-        this.flowchartHandler.getFlowchart(0).getStateHandler().edited = true;
+        this.flowchartHandler.getFlowchart().getStateHandler().edited = true;
         if (state.previousId === undefined) state.previousId = state.cellId;
         state.cellId = state.newcellId;
         state.edited = true;
@@ -99,7 +99,7 @@ var InspectOptionsCtrl = function () {
   }, {
     key: "apply",
     value: function apply() {
-      var flowchart = this.flowchartHandler.getFlowchart(0);
+      var flowchart = this.flowchartHandler.getFlowchart();
       var states = flowchart.getStateHandler().getStates();
       states.forEach(function (state) {
         if (state.edited) flowchart.renameId(state.previousId, state.cellId);

@@ -477,7 +477,9 @@ var State = function () {
         } else if (this.changedLink) {
           this.resetLink();
         }
-      } else if (this.changed) this.reset();
+      } else if (this.changed) {
+        this.reset();
+      }
     }
   }, {
     key: "reset",

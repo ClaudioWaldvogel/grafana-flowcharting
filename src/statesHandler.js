@@ -164,9 +164,9 @@ export default class StateHandler {
    */
   setStates(rules, series) {
     GF_PLUGIN.log(1, 'StateHandler.setStates()');
-    GF_PLUGIN.log(0, 'StatesHandler.setStates() Rules', rules);
-    GF_PLUGIN.log(0, 'StatesHandler.setStates() Series', series);
-    GF_PLUGIN.log(0, 'StatesHandler.setStates() States', this.states);
+    // GF_PLUGIN.log(0, 'StatesHandler.setStates() Rules', rules);
+    // GF_PLUGIN.log(0, 'StatesHandler.setStates() Series', series);
+    // GF_PLUGIN.log(0, 'StatesHandler.setStates() States', this.states);
     this.prepare();
     rules.forEach(rule => {
       if (rule.states === undefined || rule.states.length === 0) rule.states = this.getStatesForRule(rule);
@@ -184,7 +184,10 @@ export default class StateHandler {
   applyStates() {
     GF_PLUGIN.log(1, 'StateHandler.applyStates()');
     this.states.forEach(state => {
-      state.applyState();
+      // state.applyState();
+      // GF_PLUGIN.startPerf("async_applyState "+state.cellId);
+      state.async_applyState();
+      // GF_PLUGIN.stopPerf("async_applyState "+state.cellId);
     });
   }
 
@@ -194,6 +197,8 @@ export default class StateHandler {
    * @memberof StateHandler
    */
   async async_applyStates() {
+    GF_PLUGIN.startPerf("async_applyStates");
     this.applyStates();
+    GF_PLUGIN.stopPerf("async_applyStates");
   }
 }

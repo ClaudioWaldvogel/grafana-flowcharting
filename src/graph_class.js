@@ -179,6 +179,7 @@ export default class XGraph {
    */
   initGraph() {
     GF_PLUGIN.log(1, 'XGraph.initGraph()');
+    GF_PLUGIN.startPerf(`${this.constructor.name}.initGraph()`);
     this.graph = new Graph(this.container);
     this.graph.getTooltipForCell = this.getTooltipForCell;
 
@@ -204,6 +205,7 @@ export default class XGraph {
 
     // DB CLICK
     this.graph.dblClick = this.eventDbClick.bind(this);
+    GF_PLUGIN.stopPerf(`${this.constructor.name}.initGraph()`);
   }
 
   /**

@@ -128,9 +128,6 @@ var StateHandler = function () {
       var _this3 = this;
 
       GF_PLUGIN.log(1, 'StateHandler.setStates()');
-      GF_PLUGIN.log(0, 'StatesHandler.setStates() Rules', rules);
-      GF_PLUGIN.log(0, 'StatesHandler.setStates() Series', series);
-      GF_PLUGIN.log(0, 'StatesHandler.setStates() States', this.states);
       this.prepare();
       rules.forEach(function (rule) {
         if (rule.states === undefined || rule.states.length === 0) rule.states = _this3.getStatesForRule(rule);
@@ -146,7 +143,7 @@ var StateHandler = function () {
     value: function applyStates() {
       GF_PLUGIN.log(1, 'StateHandler.applyStates()');
       this.states.forEach(function (state) {
-        state.applyState();
+        state.async_applyState();
       });
     }
   }, {
@@ -157,9 +154,11 @@ var StateHandler = function () {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
+                GF_PLUGIN.startPerf("async_applyStates");
                 this.applyStates();
+                GF_PLUGIN.stopPerf("async_applyStates");
 
-              case 1:
+              case 3:
               case "end":
                 return _context.stop();
             }

@@ -27,6 +27,7 @@ var FlowchartHandler = function () {
     this.$elem = elem.find('.flowchart-panel__chart');
     this.ctrl = ctrl;
     this.flowcharts = [];
+    this.currentFlowchart = 'Main';
     this.data = data;
     this.firstLoad = true;
     this.changeSourceFlag = false;
@@ -87,8 +88,8 @@ var FlowchartHandler = function () {
     }
   }, {
     key: "getFlowchart",
-    value: function getFlowchart(index) {
-      return this.flowcharts[index];
+    value: function getFlowchart(name) {
+      return this.flowcharts[0];
     }
   }, {
     key: "getFlowcharts",
@@ -192,6 +193,8 @@ var FlowchartHandler = function () {
   }, {
     key: "refreshStates",
     value: function refreshStates(rules, series) {
+      GF_PLUGIN.startPerf("".concat(this.constructor.name, ".refreshStates()"));
+
       if (this.changeRuleFlag) {
         this.updateStates(rules);
         this.changeRuleFlag = false;
@@ -199,6 +202,7 @@ var FlowchartHandler = function () {
 
       this.setStates(rules, series);
       this.applyStates();
+      GF_PLUGIN.stopPerf("".concat(this.constructor.name, ".refreshStates()"));
     }
   }, {
     key: "refresh",
@@ -210,24 +214,30 @@ var FlowchartHandler = function () {
   }, {
     key: "setStates",
     value: function setStates(rules, series) {
+      GF_PLUGIN.startPerf("".concat(this.constructor.name, ".setStates()"));
       this.flowcharts.forEach(function (flowchart) {
         flowchart.setStates(rules, series);
       });
+      GF_PLUGIN.stopPerf("".concat(this.constructor.name, ".setStates()"));
     }
   }, {
     key: "updateStates",
     value: function updateStates(rules) {
+      GF_PLUGIN.startPerf("".concat(this.constructor.name, ".updateStates()"));
       this.flowcharts.forEach(function (flowchart) {
         flowchart.updateStates(rules);
       });
+      GF_PLUGIN.stopPerf("".concat(this.constructor.name, ".updateStates()"));
     }
   }, {
     key: "applyStates",
     value: function applyStates() {
+      GF_PLUGIN.startPerf("".concat(this.constructor.name, ".applyStates()"));
       this.flowcharts.forEach(function (flowchart) {
         flowchart.applyStates();
       });
       this.refresh();
+      GF_PLUGIN.stopPerf("".concat(this.constructor.name, ".applyStates()"));
     }
   }, {
     key: "setOptions",
@@ -255,7 +265,7 @@ var FlowchartHandler = function () {
   }, {
     key: "setMap",
     value: function setMap(objToMap) {
-      var flowchart = this.getFlowchart(0);
+      var flowchart = this.getFlowchart(this.currentFlowchart);
       this.onMapping.active = true;
       this.onMapping.object = objToMap;
       this.onMapping.id = objToMap.getId();
@@ -265,7 +275,7 @@ var FlowchartHandler = function () {
   }, {
     key: "unsetMap",
     value: function unsetMap() {
-      var flowchart = this.getFlowchart(0);
+      var flowchart = this.getFlowchart(this.currentFlowchart);
       this.onMapping.active = false;
       this.onMapping.object = undefined;
       this.onMapping.id = '';
@@ -302,10 +312,9 @@ var FlowchartHandler = function () {
     }
   }, {
     key: "openDrawEditor",
-    value: function openDrawEditor(index) {
-      var urlEditor = this.getFlowchart(index).getUrlEditor();
-      this.currentFlowchartIndex = index;
-      var theme = this.getFlowchart(index).getThemeEditor();
+    value: function openDrawEditor() {
+      var urlEditor = this.getFlowchart(this.currentFlowchart).getUrlEditor();
+      var theme = this.getFlowchart(this.currentFlowchart).getThemeEditor();
       var urlParams = "".concat(urlEditor, "?embed=1&spin=1&libraries=1&ui=").concat(theme);
       this.editorWindow = window.open(urlParams, 'MxGraph Editor', 'width=1280, height=720');
       this.onEdit = true;

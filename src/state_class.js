@@ -79,6 +79,7 @@ export default class State {
    * @memberof State
    */
   async async_applyState() {
+    // new Promise (this.applyState.bind(this));
     this.applyState();
   }
 
@@ -579,7 +580,9 @@ export default class State {
       } else if (this.changedLink) {
         this.resetLink();
       }
-    } else if (this.changed) this.reset();
+    } else if (this.changed) {
+      this.reset();
+    }
   }
 
   /**

@@ -54,8 +54,8 @@ class FlowchartCtrl extends MetricsPanelCtrl {
   //
   onInitEditMode() {
     this.addEditorTab('Flowchart', flowchartOptionsTab, 2);
-    this.addEditorTab('Mapping', mappingOptionsTab, 3);
-    this.addEditorTab('Inspect', inspectOptionsTab, 4);
+    // this.addEditorTab('Mapping', mappingOptionsTab, 3);
+    // this.addEditorTab('Inspect', inspectOptionsTab, 4);
   }
 
   onRefresh() {
@@ -99,6 +99,7 @@ class FlowchartCtrl extends MetricsPanelCtrl {
   //
   link(scope, elem, attrs, ctrl) {
     GF_PLUGIN.log(1, 'FlowchartCtrl.link()');
+    GF_PLUGIN.startPerf(`${this.constructor.name}.link()`);
 
     // RULES
     const newRulesData = [];
@@ -123,6 +124,7 @@ class FlowchartCtrl extends MetricsPanelCtrl {
     // Versions
     this.panel.newFlag = false;
     this.panel.version = this.version;
+    GF_PLUGIN.stopPerf(`${this.constructor.name}.link()`);
   }
 
   exportSVG() {

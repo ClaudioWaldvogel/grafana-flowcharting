@@ -142,8 +142,8 @@ export default class Flowchart {
    */
   setStates(rules, series) {
     GF_PLUGIN.log(1, `flowchart[${this.data.name}].setStates()`);
-    GF_PLUGIN.log(0, `flowchart[${this.data.name}].setStates() rules`, rules);
-    GF_PLUGIN.log(0, `flowchart[${this.data.name}].setStates() series`, series);
+    // GF_PLUGIN.log(0, `flowchart[${this.data.name}].setStates() rules`, rules);
+    // GF_PLUGIN.log(0, `flowchart[${this.data.name}].setStates() series`, series);
     if (rules === undefined) GF_PLUGIN.log(3, "Rules shoudn't be null");
     if (series === undefined) GF_PLUGIN.log(3, "Series shoudn't be null");
     this.stateHandler.setStates(rules, series);
@@ -173,7 +173,9 @@ export default class Flowchart {
   applyStates() {
     GF_PLUGIN.log(1, `flowchart[${this.data.name}].applyStates()`);
     // this.stateHandler.applyStates();
-    this.stateHandler.async_applyStates();
+    GF_PLUGIN.startPerf(`${this.constructor.name}.applyStates()`);
+    this.stateHandler.applyStates();
+    GF_PLUGIN.stopPerf(`${this.constructor.name}.applyStates()`);
   }
 
   /**
@@ -183,7 +185,7 @@ export default class Flowchart {
    */
   applyOptions() {
     GF_PLUGIN.log(1, `flowchart[${this.data.name}].refresh()`);
-    GF_PLUGIN.log(0, `flowchart[${this.data.name}].refresh() data`, this.data);
+    // GF_PLUGIN.log(0, `flowchart[${this.data.name}].refresh() data`, this.data);
     this.xgraph.applyGraph(this.width, this.height);
   }
 

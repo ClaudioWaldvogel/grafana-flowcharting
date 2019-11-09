@@ -92,21 +92,21 @@ export class MappingOptionsCtrl {
 
     this.getCellNamesForShape = () => {
       GF_PLUGIN.log(1, 'MappingOptionsCtrl.getCellNamesForShape()');
-      const flowchart = this.flowchartHandler.getFlowchart(0);
+      const flowchart = this.flowchartHandler.getFlowchart();
       const cells = flowchart.getNamesByProp('id');
       return _.map(cells, t => t);
     };
 
     this.getCellNamesForText = () => {
       GF_PLUGIN.log(1, 'MappingOptionsCtrl.getCellNamesForText()');
-      const flowchart = this.flowchartHandler.getFlowchart(0);
+      const flowchart = this.flowchartHandler.getFlowchart();
       const cells = flowchart.getNamesByProp('id');
       return _.map(cells, t => t);
     };
 
     this.getCellNamesForLink = () => {
       GF_PLUGIN.log(1, 'MappingOptionsCtrl.getCellNamesForLink()');
-      const flowchart = this.flowchartHandler.getFlowchart(0);
+      const flowchart = this.flowchartHandler.getFlowchart();
       const cells = flowchart.getNamesByProp('id');
       return _.map(cells, t => t);
     };
@@ -153,7 +153,7 @@ export class MappingOptionsCtrl {
    * @param  {} value
    */
   selectCell(prop, value) {
-    const flowchart = this.flowchartHandler.getFlowchart(0);
+    const flowchart = this.flowchartHandler.getFlowchart();
     const xgraph = flowchart.getXGraph();
     xgraph.selectMxCells(prop, value);
   }
@@ -164,7 +164,7 @@ export class MappingOptionsCtrl {
    * @memberof MappingOptionsCtrl
    */
   unselectCell(prop, value) {
-    const flowchart = this.flowchartHandler.getFlowchart(0);
+    const flowchart = this.flowchartHandler.getFlowchart();
     const xgraph = flowchart.getXGraph();
     xgraph.unselectMxCells(prop, value);
   }

@@ -211,7 +211,7 @@ var MappingOptionsCtrl = function () {
     this.getCellNamesForShape = function () {
       GF_PLUGIN.log(1, 'MappingOptionsCtrl.getCellNamesForShape()');
 
-      var flowchart = _this.flowchartHandler.getFlowchart(0);
+      var flowchart = _this.flowchartHandler.getFlowchart();
 
       var cells = flowchart.getNamesByProp('id');
       return _.map(cells, function (t) {
@@ -222,7 +222,7 @@ var MappingOptionsCtrl = function () {
     this.getCellNamesForText = function () {
       GF_PLUGIN.log(1, 'MappingOptionsCtrl.getCellNamesForText()');
 
-      var flowchart = _this.flowchartHandler.getFlowchart(0);
+      var flowchart = _this.flowchartHandler.getFlowchart();
 
       var cells = flowchart.getNamesByProp('id');
       return _.map(cells, function (t) {
@@ -233,7 +233,7 @@ var MappingOptionsCtrl = function () {
     this.getCellNamesForLink = function () {
       GF_PLUGIN.log(1, 'MappingOptionsCtrl.getCellNamesForLink()');
 
-      var flowchart = _this.flowchartHandler.getFlowchart(0);
+      var flowchart = _this.flowchartHandler.getFlowchart();
 
       var cells = flowchart.getNamesByProp('id');
       return _.map(cells, function (t) {
@@ -281,14 +281,14 @@ var MappingOptionsCtrl = function () {
   }, {
     key: "selectCell",
     value: function selectCell(prop, value) {
-      var flowchart = this.flowchartHandler.getFlowchart(0);
+      var flowchart = this.flowchartHandler.getFlowchart();
       var xgraph = flowchart.getXGraph();
       xgraph.selectMxCells(prop, value);
     }
   }, {
     key: "unselectCell",
     value: function unselectCell(prop, value) {
-      var flowchart = this.flowchartHandler.getFlowchart(0);
+      var flowchart = this.flowchartHandler.getFlowchart();
       var xgraph = flowchart.getXGraph();
       xgraph.unselectMxCells(prop, value);
     }

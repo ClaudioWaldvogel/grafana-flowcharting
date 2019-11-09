@@ -107,8 +107,6 @@ var Flowchart = function () {
     key: "setStates",
     value: function setStates(rules, series) {
       GF_PLUGIN.log(1, "flowchart[".concat(this.data.name, "].setStates()"));
-      GF_PLUGIN.log(0, "flowchart[".concat(this.data.name, "].setStates() rules"), rules);
-      GF_PLUGIN.log(0, "flowchart[".concat(this.data.name, "].setStates() series"), series);
       if (rules === undefined) GF_PLUGIN.log(3, "Rules shoudn't be null");
       if (series === undefined) GF_PLUGIN.log(3, "Series shoudn't be null");
       this.stateHandler.setStates(rules, series);
@@ -128,13 +126,14 @@ var Flowchart = function () {
     key: "applyStates",
     value: function applyStates() {
       GF_PLUGIN.log(1, "flowchart[".concat(this.data.name, "].applyStates()"));
-      this.stateHandler.async_applyStates();
+      GF_PLUGIN.startPerf("".concat(this.constructor.name, ".applyStates()"));
+      this.stateHandler.applyStates();
+      GF_PLUGIN.stopPerf("".concat(this.constructor.name, ".applyStates()"));
     }
   }, {
     key: "applyOptions",
     value: function applyOptions() {
       GF_PLUGIN.log(1, "flowchart[".concat(this.data.name, "].refresh()"));
-      GF_PLUGIN.log(0, "flowchart[".concat(this.data.name, "].refresh() data"), this.data);
       this.xgraph.applyGraph(this.width, this.height);
     }
   }, {

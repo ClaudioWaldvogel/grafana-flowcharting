@@ -105,8 +105,6 @@ var FlowchartCtrl = function (_MetricsPanelCtrl) {
     key: "onInitEditMode",
     value: function onInitEditMode() {
       this.addEditorTab('Flowchart', _flowchart_options.flowchartOptionsTab, 2);
-      this.addEditorTab('Mapping', _mapping_options.mappingOptionsTab, 3);
-      this.addEditorTab('Inspect', _inspect_options.inspectOptionsTab, 4);
     }
   }, {
     key: "onRefresh",
@@ -154,6 +152,7 @@ var FlowchartCtrl = function (_MetricsPanelCtrl) {
     key: "link",
     value: function link(scope, elem, attrs, ctrl) {
       GF_PLUGIN.log(1, 'FlowchartCtrl.link()');
+      GF_PLUGIN.startPerf("".concat(this.constructor.name, ".link()"));
       var newRulesData = [];
       this.rulesHandler = new _rulesHandler["default"](scope, newRulesData);
 
@@ -176,6 +175,7 @@ var FlowchartCtrl = function (_MetricsPanelCtrl) {
       this.panel.flowchartsData = newFlowchartsData;
       this.panel.newFlag = false;
       this.panel.version = this.version;
+      GF_PLUGIN.stopPerf("".concat(this.constructor.name, ".link()"));
     }
   }, {
     key: "exportSVG",
