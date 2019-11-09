@@ -1,24 +1,38 @@
 import $ from 'jquery';
 export default class FlowChartingPlugin {
-  /* @ngInject */
   constructor(context_root) {
     this.contextroot = context_root;
-    FlowChartingPlugin.defaultContextRoot = FlowChartingPlugin
     this.dirname = context_root;
     this.data = this.loadJson();
     this.repo = this.getRepo();
     this.logLevel = 3;
     this.logDisplay = true;
+    this.perf = true;
+    this.marky = null;
+  }
+
+  static initUtils() {
+    const u = require('./utils');
+    window.u = window.u || u;
   }
 
   static init($scope, $injector, $rootScope, templateSrv) {
-    let plugin;
+    FlowChartingPlugin.initUtils();
+    let plugin, contextRoot;
     if($scope == undefined) {
-      if (__dirname.length >0) plugin = new FlowChartingPlugin(__dirname);
-      else plugin = new FlowChartingPlugin(FlowChartingPlugin.defaultContextRoot);
+      console.warn("$scope is undefined, use __dirname instead");
+      contextRoot = __dirname;
+      if (contextRoot.length >0) plugin = new FlowChartingPlugin(contextRoot);
+      else {
+        contextRoot = FlowChartingPlugin.defaultContextRoot;
+        console.warn("__dirname is empty, user default",contextRoot);
+        plugin = new FlowChartingPlugin(contextRoot);
+      }
     }
     else {
-      plugin = new FlowChartingPlugin($scope.$root.appSubUrl + FlowChartingPlugin.defaultContextRoot);
+      contextRoot = $scope.$root.appSubUrl + FlowChartingPlugin.defaultContextRoot;
+      console.info("Context-root for plugin is",contextRoot);
+      plugin = new FlowChartingPlugin(contextRoot);
       plugin.$rootScope = $rootScope;
       plugin.$scope = $scope;
       plugin.$injector = $injector;
@@ -26,6 +40,10 @@ export default class FlowChartingPlugin {
     }
     window.GF_PLUGIN = plugin;
     return plugin;
+  }
+
+  setPerf(bool) {
+    this.perf = bool;
   }
 
   getLevel() {
@@ -121,6 +139,22 @@ export default class FlowChartingPlugin {
       <div style="flex:1;height:100px;margin-bottom: 20px;">${book}</div>
       <div style="flex-basis: 100%;height:100px;margin-bottom:20px;">${image}</div>
     </div>`;
+  }
+
+  startPerf(name) {
+    if(this.perf) {
+      if(this.marky == null) this.marky = u.getMarky();
+      if(name == null) name = "Flowcharting";
+      return this.marky.mark(name);
+    }
+  }
+
+  stopPerf(name) {
+    if(this.perf) {
+      if(name == null) name = "Flowcharting";
+      let entry = this.marky.stop(name);
+      console.log("Perfomance of "+name,entry);
+    }
   }
 
   log(level, title, obj) {

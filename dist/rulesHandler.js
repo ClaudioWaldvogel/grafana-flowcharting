@@ -19,7 +19,7 @@ var RulesHandler = function () {
   function RulesHandler($scope, data) {
     _classCallCheck(this, RulesHandler);
 
-    u.log(1, 'RulesHandler.constructor()');
+    GF_PLUGIN.log(1, 'RulesHandler.constructor()');
     this.$scope = $scope || null;
     this.rules = [];
     this.data = data;
@@ -31,8 +31,8 @@ var RulesHandler = function () {
     value: function _import(obj) {
       var _this = this;
 
-      u.log(1, 'RuleHandler.import()');
-      u.log(0, 'RuleHandler.import() obj', obj);
+      GF_PLUGIN.log(1, 'RuleHandler.import()');
+      GF_PLUGIN.log(0, 'RuleHandler.import() obj', obj);
       this.rules = [];
       var index = 1;
 

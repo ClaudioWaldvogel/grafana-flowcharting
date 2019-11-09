@@ -328,7 +328,7 @@ var Rule = function () {
   }, {
     key: "addLinkMap",
     value: function addLinkMap(pattern) {
-      u.log(1, 'Rule.addLinkMap()');
+      GF_PLUGIN.log(1, 'Rule.addLinkMap()');
       var data = {};
       var m = new LinkMap(pattern, data);
       m["import"](data);
@@ -487,7 +487,7 @@ var Rule = function () {
 
           return value;
         } catch (error) {
-          u.log(3, "datapoint for serie is null", error);
+          GF_PLUGIN.log(3, "datapoint for serie is null", error);
           return null;
         }
       }

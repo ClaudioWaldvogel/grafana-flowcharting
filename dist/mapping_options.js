@@ -209,7 +209,7 @@ var MappingOptionsCtrl = function () {
     };
 
     this.getCellNamesForShape = function () {
-      u.log(1, 'MappingOptionsCtrl.getCellNamesForShape()');
+      GF_PLUGIN.log(1, 'MappingOptionsCtrl.getCellNamesForShape()');
 
       var flowchart = _this.flowchartHandler.getFlowchart(0);
 
@@ -220,7 +220,7 @@ var MappingOptionsCtrl = function () {
     };
 
     this.getCellNamesForText = function () {
-      u.log(1, 'MappingOptionsCtrl.getCellNamesForText()');
+      GF_PLUGIN.log(1, 'MappingOptionsCtrl.getCellNamesForText()');
 
       var flowchart = _this.flowchartHandler.getFlowchart(0);
 
@@ -231,7 +231,7 @@ var MappingOptionsCtrl = function () {
     };
 
     this.getCellNamesForLink = function () {
-      u.log(1, 'MappingOptionsCtrl.getCellNamesForLink()');
+      GF_PLUGIN.log(1, 'MappingOptionsCtrl.getCellNamesForLink()');
 
       var flowchart = _this.flowchartHandler.getFlowchart(0);
 
@@ -242,7 +242,7 @@ var MappingOptionsCtrl = function () {
     };
 
     this.getVariables = function () {
-      u.log('MappingOptionsCtrl.getVariables');
+      GF_PLUGIN.log('MappingOptionsCtrl.getVariables');
       return _this.panelCtrl.getVariables();
     };
   }
@@ -261,7 +261,7 @@ var MappingOptionsCtrl = function () {
   }, {
     key: "onRulesChange",
     value: function onRulesChange() {
-      u.log(1, 'MappingOptionsCtrl.onRulesChange()');
+      GF_PLUGIN.log(1, 'MappingOptionsCtrl.onRulesChange()');
       this.flowchartHandler.ruleChanged();
       this.render();
     }

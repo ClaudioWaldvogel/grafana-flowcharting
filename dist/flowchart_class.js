@@ -21,8 +21,8 @@ var Flowchart = function () {
   function Flowchart(name, xmlGraph, container, ctrl, data) {
     _classCallCheck(this, Flowchart);
 
-    u.log(1, "flowchart[".concat(name, "].constructor()"));
-    u.log(0, "flowchart[".concat(name, "].constructor() data"), data);
+    GF_PLUGIN.log(1, "flowchart[".concat(name, "].constructor()"));
+    GF_PLUGIN.log(0, "flowchart[".concat(name, "].constructor() data"), data);
     this.data = data;
     this.data.name = name;
     this.data.xml = xmlGraph;
@@ -38,8 +38,8 @@ var Flowchart = function () {
   _createClass(Flowchart, [{
     key: "import",
     value: function _import(obj) {
-      u.log(1, "flowchart[".concat(this.data.name, "].import()"));
-      u.log(0, "flowchart[".concat(this.data.name, "].import() obj"), obj);
+      GF_PLUGIN.log(1, "flowchart[".concat(this.data.name, "].import()"));
+      GF_PLUGIN.log(0, "flowchart[".concat(this.data.name, "].import() obj"), obj);
       this.data.download = obj.download !== undefined ? obj.download : false;
       if (obj.source) this.data.type = obj.source.type;else this.data.type = obj.type || this.data.type || 'xml';
       if (obj.source) this.data.xml = obj.source.xml.value;else this.data.xml = obj.xml || this.data.xml || '';
@@ -76,7 +76,7 @@ var Flowchart = function () {
   }, {
     key: "init",
     value: function init() {
-      u.log(1, "flowchart[".concat(this.data.name, "].init()"));
+      GF_PLUGIN.log(1, "flowchart[".concat(this.data.name, "].init()"));
       if (this.xgraph === undefined) this.xgraph = new _graph_class["default"](this.container, this.data.type, this.getContent());
 
       if (this.data.xml !== undefined && this.data.xml !== null) {
@@ -90,7 +90,7 @@ var Flowchart = function () {
         if (this.data.lock) this.xgraph.lockGraph(true);
         this.stateHandler = new _statesHandler["default"](this.xgraph, this.ctrl);
       } else {
-        u.log(3, 'XML Graph not defined');
+        GF_PLUGIN.log(3, 'XML Graph not defined');
       }
     }
   }, {
@@ -106,11 +106,11 @@ var Flowchart = function () {
   }, {
     key: "setStates",
     value: function setStates(rules, series) {
-      u.log(1, "flowchart[".concat(this.data.name, "].setStates()"));
-      u.log(0, "flowchart[".concat(this.data.name, "].setStates() rules"), rules);
-      u.log(0, "flowchart[".concat(this.data.name, "].setStates() series"), series);
-      if (rules === undefined) u.log(3, "Rules shoudn't be null");
-      if (series === undefined) u.log(3, "Series shoudn't be null");
+      GF_PLUGIN.log(1, "flowchart[".concat(this.data.name, "].setStates()"));
+      GF_PLUGIN.log(0, "flowchart[".concat(this.data.name, "].setStates() rules"), rules);
+      GF_PLUGIN.log(0, "flowchart[".concat(this.data.name, "].setStates() series"), series);
+      if (rules === undefined) GF_PLUGIN.log(3, "Rules shoudn't be null");
+      if (series === undefined) GF_PLUGIN.log(3, "Series shoudn't be null");
       this.stateHandler.setStates(rules, series);
     }
   }, {
@@ -127,14 +127,14 @@ var Flowchart = function () {
   }, {
     key: "applyStates",
     value: function applyStates() {
-      u.log(1, "flowchart[".concat(this.data.name, "].applyStates()"));
+      GF_PLUGIN.log(1, "flowchart[".concat(this.data.name, "].applyStates()"));
       this.stateHandler.async_applyStates();
     }
   }, {
     key: "applyOptions",
     value: function applyOptions() {
-      u.log(1, "flowchart[".concat(this.data.name, "].refresh()"));
-      u.log(0, "flowchart[".concat(this.data.name, "].refresh() data"), this.data);
+      GF_PLUGIN.log(1, "flowchart[".concat(this.data.name, "].refresh()"));
+      GF_PLUGIN.log(0, "flowchart[".concat(this.data.name, "].refresh() data"), this.data);
       this.xgraph.applyGraph(this.width, this.height);
     }
   }, {
@@ -145,13 +145,13 @@ var Flowchart = function () {
   }, {
     key: "redraw",
     value: function redraw(xmlGraph) {
-      u.log(1, "flowchart[".concat(this.data.name, "].redraw()"));
+      GF_PLUGIN.log(1, "flowchart[".concat(this.data.name, "].redraw()"));
 
       if (xmlGraph !== undefined) {
         this.data.xml = xmlGraph;
         this.xgraph.setXmlGraph(this.getXml(true));
       } else {
-        u.log(2, 'XML Content not defined');
+        GF_PLUGIN.log(2, 'XML Content not defined');
         this.xgraph.setXmlGraph(this.getXml(true));
       }
 
@@ -160,7 +160,7 @@ var Flowchart = function () {
   }, {
     key: "reload",
     value: function reload() {
-      u.log(1, "flowchart[".concat(this.data.name, "].reload()"));
+      GF_PLUGIN.log(1, "flowchart[".concat(this.data.name, "].reload()"));
 
       if (this.xgraph !== undefined && this.xgraph !== null) {
         this.xgraph.destroyGraph();
@@ -213,7 +213,7 @@ var Flowchart = function () {
   }, {
     key: "scale",
     value: function scale(bool) {
-      u.log(1, 'Flowchart.scale()');
+      GF_PLUGIN.log(1, 'Flowchart.scale()');
       if (bool !== undefined) this.data.scale = bool;
       this.xgraph.scaleGraph(this.data.scale);
     }
@@ -231,14 +231,14 @@ var Flowchart = function () {
   }, {
     key: "getXml",
     value: function getXml(replaceVarBool) {
-      u.log(1, "flowchart[".concat(this.data.name, "].getXml()"));
+      GF_PLUGIN.log(1, "flowchart[".concat(this.data.name, "].getXml()"));
       if (!replaceVarBool) return this.data.xml;
       return this.templateSrv.replaceWithText(this.data.xml);
     }
   }, {
     key: "getCsv",
     value: function getCsv(replaceVarBool) {
-      u.log(1, "flowchart[".concat(this.data.name, "].getXml()"));
+      GF_PLUGIN.log(1, "flowchart[".concat(this.data.name, "].getXml()"));
       if (!replaceVarBool) return this.data.csv;
       return this.templateSrv.replaceWithText(this.data.csv);
     }
@@ -255,7 +255,7 @@ var Flowchart = function () {
   }, {
     key: "getContent",
     value: function getContent() {
-      u.log(1, "flowchart[".concat(this.data.name, "].getContent()"));
+      GF_PLUGIN.log(1, "flowchart[".concat(this.data.name, "].getContent()"));
 
       if (this.data.download) {
         var url = this.templateSrv.replaceWithText(this.data.url);
@@ -272,13 +272,13 @@ var Flowchart = function () {
   }, {
     key: "loadContent",
     value: function loadContent(url) {
-      u.log(1, "flowchart[".concat(this.data.name, "].loadContent()"));
+      GF_PLUGIN.log(1, "flowchart[".concat(this.data.name, "].loadContent()"));
       var req = mxUtils.load(url);
 
       if (req.getStatus() === 200) {
         return req.getText();
       } else {
-        u.log(3, 'Cannot load ' + url, req.getStatus());
+        GF_PLUGIN.log(3, 'Cannot load ' + url, req.getStatus());
         return null;
       }
     }
@@ -366,7 +366,7 @@ var Flowchart = function () {
   }, {
     key: "setMap",
     value: function setMap(onMappingObj) {
-      u.log(1, "flowchart[".concat(this.data.name, "].setMap()"));
+      GF_PLUGIN.log(1, "flowchart[".concat(this.data.name, "].setMap()"));
       var container = this.getContainer();
       this.xgraph.setMap(onMappingObj);
       container.scrollIntoView();

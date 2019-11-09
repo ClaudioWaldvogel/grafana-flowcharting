@@ -25,7 +25,7 @@ var State = function () {
 
     _classCallCheck(this, State);
 
-    u.log(1, 'State.constructor()');
+    GF_PLUGIN.log(1, 'State.constructor()');
     this.mxcell = mxcell;
     this.cellId = mxcell.id;
     this.xgraph = xgraph;
@@ -110,9 +110,9 @@ var State = function () {
     value: function setState(rule, serie) {
       var _this2 = this;
 
-      u.log(1, 'State.setState()');
-      u.log(0, 'State.setState() Rule', rule);
-      u.log(0, 'State.setState() Serie', serie);
+      GF_PLUGIN.log(1, 'State.setState()');
+      GF_PLUGIN.log(0, 'State.setState() Rule', rule);
+      GF_PLUGIN.log(0, 'State.setState() Serie', serie);
 
       if (rule.matchSerie(serie)) {
         var shapeMaps = rule.getShapeMaps();
@@ -192,14 +192,14 @@ var State = function () {
         });
       }
 
-      u.log(0, 'State.setState() state', this);
+      GF_PLUGIN.log(0, 'State.setState() state', this);
     }
   }, {
     key: "unsetState",
     value: function unsetState() {
       var _this3 = this;
 
-      u.log(1, 'State.unsetState()');
+      GF_PLUGIN.log(1, 'State.unsetState()');
       this.unsetLevel();
       this.resetStyle();
       this.unsetText();
@@ -233,7 +233,7 @@ var State = function () {
   }, {
     key: "setColorStyle",
     value: function setColorStyle(style, color) {
-      u.log(1, 'State.setColorStyle()');
+      GF_PLUGIN.log(1, 'State.setColorStyle()');
       this.currentColors[style] = color;
     }
   }, {
@@ -274,7 +274,7 @@ var State = function () {
   }, {
     key: "setLevelStyle",
     value: function setLevelStyle(style, level) {
-      u.log(1, 'State.setLevelStyle()');
+      GF_PLUGIN.log(1, 'State.setLevelStyle()');
       this.level[style] = level;
       if (this.globalLevel < level) this.globalLevel = level;
     }
@@ -333,9 +333,9 @@ var State = function () {
   }, {
     key: "addTooltip",
     value: function addTooltip(name, label, value, color, direction) {
-      u.log(1, 'State.addTooltipValue()');
-      u.log(0, 'State.addTooltipValue() label', label);
-      u.log(0, 'State.addTooltipValue() value', value);
+      GF_PLUGIN.log(1, 'State.addTooltipValue()');
+      GF_PLUGIN.log(0, 'State.addTooltipValue() label', label);
+      GF_PLUGIN.log(0, 'State.addTooltipValue() value', value);
       if (this.tooltipHandler == null) this.tooltipHandler = new _tooltipHandler["default"](this.mxcell);
       this.tooltipHandler.addMetric(name, label, value, color, direction);
     }
@@ -454,7 +454,7 @@ var State = function () {
   }, {
     key: "applyState",
     value: function applyState() {
-      u.log(1, 'State.applyState()');
+      GF_PLUGIN.log(1, 'State.applyState()');
 
       if (this.matched) {
         this.changed = true;

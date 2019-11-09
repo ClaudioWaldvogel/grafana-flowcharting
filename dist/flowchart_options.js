@@ -57,7 +57,7 @@ var FlowchartOptionsCtrl = function () {
   }, {
     key: "onOptionChange",
     value: function onOptionChange() {
-      u.log(1, "FlowchartOptionsCtrl.onOptionChange()");
+      GF_PLUGIN.log(1, "FlowchartOptionsCtrl.onOptionChange()");
       this.flowchartHandler.optionChanged();
       this.render();
     }

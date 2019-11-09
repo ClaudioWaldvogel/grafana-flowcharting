@@ -43,10 +43,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
-var u = require('./utils');
-
-window.u = window.u || u;
-
 var FlowchartCtrl = function (_MetricsPanelCtrl) {
   _inherits(FlowchartCtrl, _MetricsPanelCtrl);
 

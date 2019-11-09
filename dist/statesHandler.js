@@ -23,7 +23,7 @@ var StateHandler = function () {
   function StateHandler(xgraph, ctrl) {
     _classCallCheck(this, StateHandler);
 
-    u.log(1, 'StateHandler.constructor()');
+    GF_PLUGIN.log(1, 'StateHandler.constructor()');
     this.states = new Map();
     this.ctrl = ctrl;
     this.templateSrv = this.ctrl.templateSrv;
@@ -36,7 +36,7 @@ var StateHandler = function () {
     value: function initStates(xgraph, rules) {
       var _this = this;
 
-      u.log(1, 'StateHandler.initStates()');
+      GF_PLUGIN.log(1, 'StateHandler.initStates()');
       this.xgraph = xgraph;
       this.states.clear();
       var mxcells = xgraph.getMxCells();
@@ -48,7 +48,7 @@ var StateHandler = function () {
   }, {
     key: "getStatesForRule",
     value: function getStatesForRule(rule) {
-      u.log(1, 'StateHandler.getStatesForRule()');
+      GF_PLUGIN.log(1, 'StateHandler.getStatesForRule()');
       var result = new Map();
       var name = null;
       var xgraph = this.xgraph;
@@ -88,7 +88,7 @@ var StateHandler = function () {
     value: function updateStates(rules) {
       var _this2 = this;
 
-      u.log(1, 'StateHandler.updateStates()');
+      GF_PLUGIN.log(1, 'StateHandler.updateStates()');
       rules.forEach(function (rule) {
         rule.states = _this2.getStatesForRule(rule);
       });
@@ -127,10 +127,10 @@ var StateHandler = function () {
     value: function setStates(rules, series) {
       var _this3 = this;
 
-      u.log(1, 'StateHandler.setStates()');
-      u.log(0, 'StatesHandler.setStates() Rules', rules);
-      u.log(0, 'StatesHandler.setStates() Series', series);
-      u.log(0, 'StatesHandler.setStates() States', this.states);
+      GF_PLUGIN.log(1, 'StateHandler.setStates()');
+      GF_PLUGIN.log(0, 'StatesHandler.setStates() Rules', rules);
+      GF_PLUGIN.log(0, 'StatesHandler.setStates() Series', series);
+      GF_PLUGIN.log(0, 'StatesHandler.setStates() States', this.states);
       this.prepare();
       rules.forEach(function (rule) {
         if (rule.states === undefined || rule.states.length === 0) rule.states = _this3.getStatesForRule(rule);
@@ -144,7 +144,7 @@ var StateHandler = function () {
   }, {
     key: "applyStates",
     value: function applyStates() {
-      u.log(1, 'StateHandler.applyStates()');
+      GF_PLUGIN.log(1, 'StateHandler.applyStates()');
       this.states.forEach(function (state) {
         state.applyState();
       });

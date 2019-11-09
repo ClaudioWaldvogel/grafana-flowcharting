@@ -20,15 +20,21 @@ var FlowChartingPlugin = function () {
     _classCallCheck(this, FlowChartingPlugin);
 
     this.contextroot = context_root;
-    FlowChartingPlugin.defaultContextRoot = FlowChartingPlugin;
     this.dirname = context_root;
     this.data = this.loadJson();
     this.repo = this.getRepo();
     this.logLevel = 3;
     this.logDisplay = true;
+    this.perf = true;
+    this.marky = null;
   }
 
   _createClass(FlowChartingPlugin, [{
+    key: "setPerf",
+    value: function setPerf(bool) {
+      this.perf = bool;
+    }
+  }, {
     key: "getLevel",
     value: function getLevel() {
       return this.logLevel;
@@ -131,6 +137,24 @@ var FlowChartingPlugin = function () {
       return "\n    <div id=\"popover\" style=\"display:flex;flex-wrap:wrap;width: 100%;\">\n      <div style=\"flex:1;height:100px;margin-bottom: 20px;\">".concat(desc, "</div>\n      <div style=\"flex:1;height:100px;margin-bottom: 20px;\">").concat(book, "</div>\n      <div style=\"flex-basis: 100%;height:100px;margin-bottom:20px;\">").concat(image, "</div>\n    </div>");
     }
   }, {
+    key: "startPerf",
+    value: function startPerf(name) {
+      if (this.perf) {
+        if (this.marky == null) this.marky = u.getMarky();
+        if (name == null) name = "Flowcharting";
+        return this.marky.mark(name);
+      }
+    }
+  }, {
+    key: "stopPerf",
+    value: function stopPerf(name) {
+      if (this.perf) {
+        if (name == null) name = "Flowcharting";
+        var entry = this.marky.stop(name);
+        console.log("Perfomance of " + name, entry);
+      }
+    }
+  }, {
     key: "log",
     value: function log(level, title, obj) {
       if (this.logDisplay !== undefined && this.logDisplay === true) {
@@ -157,14 +181,30 @@ var FlowChartingPlugin = function () {
       }
     }
   }], [{
+    key: "initUtils",
+    value: function initUtils() {
+      var u = require('./utils');
+
+      window.u = window.u || u;
+    }
+  }, {
     key: "init",
     value: function init($scope, $injector, $rootScope, templateSrv) {
-      var plugin;
+      FlowChartingPlugin.initUtils();
+      var plugin, contextRoot;
 
       if ($scope == undefined) {
-        if (__dirname.length > 0) plugin = new FlowChartingPlugin(__dirname);else plugin = new FlowChartingPlugin(FlowChartingPlugin.defaultContextRoot);
+        console.warn("$scope is undefined, use __dirname instead");
+        contextRoot = __dirname;
+        if (contextRoot.length > 0) plugin = new FlowChartingPlugin(contextRoot);else {
+          contextRoot = FlowChartingPlugin.defaultContextRoot;
+          console.warn("__dirname is empty, user default", contextRoot);
+          plugin = new FlowChartingPlugin(contextRoot);
+        }
       } else {
-        plugin = new FlowChartingPlugin($scope.$root.appSubUrl + FlowChartingPlugin.defaultContextRoot);
+        contextRoot = $scope.$root.appSubUrl + FlowChartingPlugin.defaultContextRoot;
+        console.info("Context-root for plugin is", contextRoot);
+        plugin = new FlowChartingPlugin(contextRoot);
         plugin.$rootScope = $rootScope;
         plugin.$scope = $scope;
         plugin.$injector = $injector;

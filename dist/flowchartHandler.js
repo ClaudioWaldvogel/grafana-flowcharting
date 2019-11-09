@@ -21,8 +21,8 @@ var FlowchartHandler = function () {
 
     _classCallCheck(this, FlowchartHandler);
 
-    u.log(1, 'FlowchartHandler.constructor()');
-    u.log(0, 'FlowchartHandler.constructor() data', data);
+    GF_PLUGIN.log(1, 'FlowchartHandler.constructor()');
+    GF_PLUGIN.log(0, 'FlowchartHandler.constructor() data', data);
     this.$scope = $scope || null;
     this.$elem = elem.find('.flowchart-panel__chart');
     this.ctrl = ctrl;
@@ -67,8 +67,8 @@ var FlowchartHandler = function () {
     value: function _import(obj) {
       var _this2 = this;
 
-      u.log(1, 'FlowchartHandler.import()');
-      u.log(0, 'FlowchartHandler.import() obj', obj);
+      GF_PLUGIN.log(1, 'FlowchartHandler.import()');
+      GF_PLUGIN.log(0, 'FlowchartHandler.import() obj', obj);
       this.flowcharts = [];
 
       if (obj !== undefined && obj !== null && obj.length > 0) {
@@ -111,7 +111,7 @@ var FlowchartHandler = function () {
   }, {
     key: "addFlowchart",
     value: function addFlowchart(name) {
-      u.log(1, 'FlowchartHandler.addFlowchart()');
+      GF_PLUGIN.log(1, 'FlowchartHandler.addFlowchart()');
       var container = this.createContainer();
       var data = {};
       var flowchart = new _flowchart_class["default"](name, this.defaultXml, container, this.ctrl, data);
@@ -121,8 +121,8 @@ var FlowchartHandler = function () {
   }, {
     key: "render",
     value: function render() {
-      u.log(1, 'flowchartHandler.render()');
-      console.log("FlowCharting render begin Time : ", Date.now());
+      GF_PLUGIN.log(1, 'flowchartHandler.render()');
+      GF_PLUGIN.startPerf("".concat(this.constructor.name, ".render()"));
       this.optionsFlag = true;
 
       if (!this.mousedown) {
@@ -154,7 +154,7 @@ var FlowchartHandler = function () {
         }
       }
 
-      console.log("FlowCharting render end Time : ", Date.now());
+      GF_PLUGIN.stopPerf("".concat(this.constructor.name, ".render()"));
     }
   }, {
     key: "sourceChanged",
@@ -179,7 +179,7 @@ var FlowchartHandler = function () {
   }, {
     key: "applyOptions",
     value: function applyOptions() {
-      u.log(1, "FlowchartHandler.applyOptions()");
+      GF_PLUGIN.log(1, "FlowchartHandler.applyOptions()");
       this.flowcharts.forEach(function (flowchart) {
         flowchart.applyOptions();
       });
@@ -239,7 +239,7 @@ var FlowchartHandler = function () {
   }, {
     key: "draw",
     value: function draw() {
-      u.log(1, "FlowchartHandler.draw()");
+      GF_PLUGIN.log(1, "FlowchartHandler.draw()");
       this.flowcharts.forEach(function (flowchart) {
         flowchart.redraw();
       });
@@ -247,7 +247,7 @@ var FlowchartHandler = function () {
   }, {
     key: "load",
     value: function load() {
-      u.log(1, "FlowchartHandler.load()");
+      GF_PLUGIN.log(1, "FlowchartHandler.load()");
       this.flowcharts.forEach(function (flowchart) {
         flowchart.reload();
       });

@@ -95,6 +95,7 @@
   },
   "dependencies": {
     "eslint-config-airbnb-base": "^13.1.0",
+    "marky": "^1.2.1",
     "node-sass": "^4.13.0"
   }
 }

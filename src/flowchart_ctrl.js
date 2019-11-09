@@ -8,9 +8,6 @@ import { inspectOptionsTab } from './inspect_options';
 import RulesHandler from './rulesHandler';
 import FlowchartHandler from './flowchartHandler';
 
-const u = require('./utils');
-window.u = window.u || u;
-
 class FlowchartCtrl extends MetricsPanelCtrl {
   /** @ngInject **/
   constructor($scope, $injector, $rootScope, templateSrv) {
