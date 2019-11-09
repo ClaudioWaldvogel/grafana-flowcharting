@@ -57,6 +57,8 @@ plugin.getPartialPath = function () {
   return this.partialPath;
 };
 
+plugin.log = function (level, title, obj) {};
+
 plugin.popover = function (text, tagBook, tagImage) {
   var url = this.repository;
   var images = "".concat(this.repository, "images/");

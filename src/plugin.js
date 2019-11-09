@@ -48,6 +48,9 @@ plugin.getPartialPath = function () {
   return this.partialPath;
 };
 
+plugin.log = function (level, title, obj) {
+};
+
 // eslint-disable-next-line func-names
 plugin.popover = function (text, tagBook, tagImage) {
   const url = this.repository;
