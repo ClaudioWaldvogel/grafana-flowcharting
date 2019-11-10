@@ -1,8 +1,6 @@
 /* eslint-disable no-unused-vars */
-import { plugin } from './plugin';
-
 export class FlowchartOptionsCtrl {
-  /** @ngInject */
+  /** @ngInject **/
   constructor($scope) {
     $scope.editor = this;
     $scope.GF_PLUGIN = window.GF_PLUGIN;

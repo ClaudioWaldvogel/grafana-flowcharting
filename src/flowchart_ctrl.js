@@ -12,10 +12,10 @@ class FlowchartCtrl extends MetricsPanelCtrl {
   /** @ngInject **/
   constructor($scope, $injector, $rootScope, templateSrv) {
     super($scope, $injector);
-    FlowChartingPlugin.init($scope, $injector, $rootScope, templateSrv);
-    this.version = GF_PLUGIN.getVersion();
+    FlowChartingPlugin.init($scope,templateSrv);
     this.$rootScope = $rootScope;
     this.$scope = $scope;
+    this.version = GF_PLUGIN.getVersion();
     this.templateSrv = templateSrv;
     this.unitFormats = kbn.getUnitFormats();
     this.changedSource = true;
@@ -54,8 +54,8 @@ class FlowchartCtrl extends MetricsPanelCtrl {
   //
   onInitEditMode() {
     this.addEditorTab('Flowchart', flowchartOptionsTab, 2);
-    // this.addEditorTab('Mapping', mappingOptionsTab, 3);
-    // this.addEditorTab('Inspect', inspectOptionsTab, 4);
+    this.addEditorTab('Mapping', mappingOptionsTab, 3);
+    this.addEditorTab('Inspect', inspectOptionsTab, 4);
   }
 
   onRefresh() {

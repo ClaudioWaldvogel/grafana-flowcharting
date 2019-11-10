@@ -53,11 +53,11 @@ var FlowchartCtrl = function (_MetricsPanelCtrl) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(FlowchartCtrl).call(this, $scope, $injector));
 
-    _plugin["default"].init($scope, $injector, $rootScope, templateSrv);
+    _plugin["default"].init($scope, templateSrv);
 
-    _this.version = GF_PLUGIN.getVersion();
     _this.$rootScope = $rootScope;
     _this.$scope = $scope;
+    _this.version = GF_PLUGIN.getVersion();
     _this.templateSrv = templateSrv;
     _this.unitFormats = _kbn["default"].getUnitFormats();
     _this.changedSource = true;
@@ -105,6 +105,8 @@ var FlowchartCtrl = function (_MetricsPanelCtrl) {
     key: "onInitEditMode",
     value: function onInitEditMode() {
       this.addEditorTab('Flowchart', _flowchart_options.flowchartOptionsTab, 2);
+      this.addEditorTab('Mapping', _mapping_options.mappingOptionsTab, 3);
+      this.addEditorTab('Inspect', _inspect_options.inspectOptionsTab, 4);
     }
   }, {
     key: "onRefresh",
