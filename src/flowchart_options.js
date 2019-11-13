@@ -1,8 +1,6 @@
 /* eslint-disable no-unused-vars */
-import { plugin } from './plugin';
-
 export class FlowchartOptionsCtrl {
-  /** @ngInject */
+  /** @ngInject **/
   constructor($scope) {
     $scope.editor = this;
     $scope.GF_PLUGIN = window.GF_PLUGIN;
@@ -45,7 +43,7 @@ export class FlowchartOptionsCtrl {
    * @memberof FlowchartOptionsCtrl
    */
   onOptionChange() {
-    u.log(1, "FlowchartOptionsCtrl.onOptionChange()");
+    GF_PLUGIN.log(1, "FlowchartOptionsCtrl.onOptionChange()");
     this.flowchartHandler.optionChanged();
     this.render();
   }

@@ -43,10 +43,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
-var u = require('./utils');
-
-window.u = window.u || u;
-
 var FlowchartCtrl = function (_MetricsPanelCtrl) {
   _inherits(FlowchartCtrl, _MetricsPanelCtrl);
 
@@ -57,11 +53,11 @@ var FlowchartCtrl = function (_MetricsPanelCtrl) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(FlowchartCtrl).call(this, $scope, $injector));
 
-    _plugin["default"].init($scope, $injector, $rootScope, templateSrv);
+    _plugin["default"].init($scope, templateSrv);
 
-    _this.version = GF_PLUGIN.getVersion();
     _this.$rootScope = $rootScope;
     _this.$scope = $scope;
+    _this.version = GF_PLUGIN.getVersion();
     _this.templateSrv = templateSrv;
     _this.unitFormats = _kbn["default"].getUnitFormats();
     _this.changedSource = true;
@@ -158,6 +154,7 @@ var FlowchartCtrl = function (_MetricsPanelCtrl) {
     key: "link",
     value: function link(scope, elem, attrs, ctrl) {
       GF_PLUGIN.log(1, 'FlowchartCtrl.link()');
+      GF_PLUGIN.startPerf("".concat(this.constructor.name, ".link()"));
       var newRulesData = [];
       this.rulesHandler = new _rulesHandler["default"](scope, newRulesData);
 
@@ -180,6 +177,7 @@ var FlowchartCtrl = function (_MetricsPanelCtrl) {
       this.panel.flowchartsData = newFlowchartsData;
       this.panel.newFlag = false;
       this.panel.version = this.version;
+      GF_PLUGIN.stopPerf("".concat(this.constructor.name, ".link()"));
     }
   }, {
     key: "exportSVG",

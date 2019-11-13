@@ -8,17 +8,14 @@ import { inspectOptionsTab } from './inspect_options';
 import RulesHandler from './rulesHandler';
 import FlowchartHandler from './flowchartHandler';
 
-const u = require('./utils');
-window.u = window.u || u;
-
 class FlowchartCtrl extends MetricsPanelCtrl {
   /** @ngInject **/
   constructor($scope, $injector, $rootScope, templateSrv) {
     super($scope, $injector);
-    FlowChartingPlugin.init($scope, $injector, $rootScope, templateSrv);
-    this.version = GF_PLUGIN.getVersion();
+    FlowChartingPlugin.init($scope,templateSrv);
     this.$rootScope = $rootScope;
     this.$scope = $scope;
+    this.version = GF_PLUGIN.getVersion();
     this.templateSrv = templateSrv;
     this.unitFormats = kbn.getUnitFormats();
     this.changedSource = true;
@@ -102,6 +99,7 @@ class FlowchartCtrl extends MetricsPanelCtrl {
   //
   link(scope, elem, attrs, ctrl) {
     GF_PLUGIN.log(1, 'FlowchartCtrl.link()');
+    GF_PLUGIN.startPerf(`${this.constructor.name}.link()`);
 
     // RULES
     const newRulesData = [];
@@ -126,6 +124,7 @@ class FlowchartCtrl extends MetricsPanelCtrl {
     // Versions
     this.panel.newFlag = false;
     this.panel.version = this.version;
+    GF_PLUGIN.stopPerf(`${this.constructor.name}.link()`);
   }
 
   exportSVG() {
